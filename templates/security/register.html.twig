@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Inscription
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-4 col-md-push-4">
+				<h1>Inscription</h1>
+				<hr>
+				{{ form_start(form) }}
+				{{ form_row(form.username, {'attr':{'class': 'form-control'}}) }}
+				{{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
+				{{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
+				{{ form_row(form.confirmPassword, {'attr': {'class': 'form-control'}}) }}
+				<button type="submit" class="btn btn-primary">S'incrire</button>
+				{{ form_end(form) }}
+			</div>
+		</div>
+	</div>
+{% endblock %}

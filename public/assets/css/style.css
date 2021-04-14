@@ -70,7 +70,7 @@ body.boxed-layout {
 }
 
 .heading-font,
-.navbar-default .navbar-brand,
+.navbar-default, .header6, .navbar-brand,
 .navbar-default .nav li a {
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: none;
@@ -1362,7 +1362,6 @@ textarea#comments {
 footer.white-wrapper {
     padding: 60px 0;
     background-color: #000;
-    background-image: url('assets/img/footer-bg.jpeg');
 }
 
 footer.white-wrapper * {
