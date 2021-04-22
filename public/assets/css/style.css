@@ -70,7 +70,7 @@ body.boxed-layout {
 }
 
 .heading-font,
-.navbar-default, .header6, .navbar-brand,
+.navbar-default .navbar-brand,
 .navbar-default .nav li a {
     font-family: 'Montserrat', "Helvetica Neue", Helvetica, Arial, sans-serif;
     text-transform: none;

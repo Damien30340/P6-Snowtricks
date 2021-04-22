@@ -13,29 +13,44 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand smoothie logo logo-light" href="/home"><img src="assets/img/snowtricks_logo.png" alt="logo"></a>
-				<a class="navbar-brand smoothie logo logo-dark" href="/home"><img src="assets/img/snowtricks_logo_reverse.png" alt="logo"></a>
+				<a class="navbar-brand smoothie logo logo-light" href="/"><img src="assets/img/snowtricks_logo.png" alt="logo"></a>
+				<a class="navbar-brand smoothie logo logo-dark" href="/"><img src="assets/img/snowtricks_logo_reverse.png" alt="logo"></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="main-navigation">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="/home" class="dropdown-toggle">Accueil
+						<a href="/" class="dropdown-toggle">Accueil
 						</a>
 					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
-						</a>
-					</li>
-					<li class="dropdown">
-						<a href="/connexion" class="dropdown-toggle" data-hover="dropdown">Se connecter
-						</a>
-					</li>
-					<li class="dropdown">
-						<a href="/inscription" class="dropdown-toggle" data-hover="dropdown">S'inscrire
-						</a>
-					</li>
+					{% if is_granted('ROLE_USER') %}
+						<li class="dropdown">
+							<a href="/addTrick" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
+							</a>
+						</li>
+					{% endif %}
+					{% if app.user %}
+						<li class="dropdown">
+							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown">Bonjour
+								{{ app.user.username }}
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="{{ path('app_logout') }}" class="dropdown-toggle" data-hover="dropdown">Se deconnecter
+							</a>
+						</li>
+
+					{% else %}
+						<li class="dropdown">
+							<a href="/login" class="dropdown-toggle" data-hover="dropdown">Se connecter
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="/register" class="dropdown-toggle" data-hover="dropdown">S'inscrire
+							</a>
+						</li>
+					{% endif %}
 					<li>
 						<a href="#search">
 							<i class="pe-7s-search"></i>
@@ -76,28 +91,42 @@
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</button>
-				<a class="navbar-brand smoothie logo logo-light" href="/home"><img src="assets/img/snowtricks_logo_reverse.png" alt="logo"></a>
+				<a class="navbar-brand smoothie logo logo-light" href="/"><img src="assets/img/snowtricks_logo_reverse.png" alt="logo"></a>
 			</div>
 
 			<!-- Collect the nav links, forms, and other content for toggling -->
 			<div class="collapse navbar-collapse" id="main-navigation">
 				<ul class="nav navbar-nav navbar-right">
 					<li class="dropdown">
-						<a href="/home" class="dropdown-toggle" style="color: black;">Accueil
+						<a href="/" class="dropdown-toggle" style='color: black;'>Accueil
 						</a>
 					</li>
-					<li class="dropdown">
-						<a href="#" class="dropdown-toggle" data-hover="dropdown" style="color: black;">Ajouter une figure
-						</a>
-					</li>
-					<li class="dropdown">
-						<a href="/connexion" class="dropdown-toggle" data-hover="dropdown" style="color: black;">Se connecter
-						</a>
-					</li>
-					<li class="dropdown">
-						<a href="/inscription" class="dropdown-toggle" data-hover="dropdown" style="color: black;">S'inscrire
-						</a>
-					</li>
+					{% if is_granted('ROLE_USER') %}
+						<li class="dropdown">
+							<a href="/newTrick" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Ajouter une figure
+							</a>
+						</li>
+					{% endif %}
+					{% if app.user %}
+						<li class="dropdown">
+							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Espace membre
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="{{ path('app_logout') }}" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Se deconnecter
+							</a>
+						</li>
+
+					{% else %}
+						<li class="dropdown">
+							<a href="/login" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Se connecter
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="/register" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>S'inscrire
+							</a>
+						</li>
+					{% endif %}
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
