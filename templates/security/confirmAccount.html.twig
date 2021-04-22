@@ -1,0 +1,25 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Confirmation du compte !
+{% endblock %}
+
+{% block body %}
+
+	<div class="container">
+
+		<div class="row">
+			<div class="col-md-4 col-md-push-4">
+				<p>
+					Félicications
+					{{ user.username }},
+					{% if is_granted('ROLE_USER') %}
+						le token ne correspond pas avec ce qui est attendu, le compte n'a pas pu être activé !
+					{% else %}
+						le compte vient d'être activé !
+					{% endif %}
+					<br>
+				</p>
+			</div>
+		</div>
+	</div>
+{% endblock %}

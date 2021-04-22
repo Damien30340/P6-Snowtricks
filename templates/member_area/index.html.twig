@@ -1,0 +1,37 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Espace membre
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		<div class="row">
+			<div class="col-md-4 col-md-push-4">
+				<h1>Bonjour
+					{{ user.username }}
+					!</h1>
+				<hr></div>
+		</div>
+		<div class="row">
+			<div class="col-md-4 col-md-push-2">
+				<h3>Avatar
+				</h3>
+				<br>
+				{{ form_start(form) }}
+				{{ form_row(form.avatar, {'attr': {'class': 'form-control'}}) }}
+				<button type="submit" class="btn btn-primary">Ajouter mon avatar</button>
+				{{ form_end(form) }}
+			</div>
+			<div class="col-md-4 col-md-push-2">
+				<h3>Vos informations
+				</h3>
+				<p>Votre pseudo :
+					{{ user.username }}
+					<br>
+					Votre adresse email :
+					{{ user.email }}</p>
+				<a href="/deleteAccount" class="btn btn-danger">Supprimer mon compte</a>
+			</div>
+		</div>
+	</div>
+{% endblock %}

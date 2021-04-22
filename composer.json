@@ -43,6 +43,7 @@
         "twig/twig": "^2.12|^3.0"
     },
     "require-dev": {
+        "doctrine/doctrine-fixtures-bundle": "^3.4",
         "symfony/browser-kit": "^5.2",
         "symfony/css-selector": "^5.2",
         "symfony/debug-bundle": "^5.2",
@@ -75,6 +76,15 @@
         "symfony/polyfill-php72": "*"
     },
     "scripts": {
+        "reset": [
+            "symfony console d:d:d --force --if-exists",
+            "symfony console d:d:c",
+            "symfony console d:s:c",
+            "symfony console d:f:l --append -q"
+        ],
+        "srv": [
+            "symfony server:start"
+        ],
         "auto-scripts": {
             "cache:clear": "symfony-cmd",
             "assets:install %PUBLIC_DIR%": "symfony-cmd"
