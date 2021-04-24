@@ -20,7 +20,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 class MemberAreaController extends AbstractController
 {
     /**
-     * @Route("/member_area", name="app_member_area")
+     * @Route("/espace-membre", name="app_member_area")
      */
     public function index(Request $request, EntityManagerInterface $manager, UserInterface $user): Response
     {

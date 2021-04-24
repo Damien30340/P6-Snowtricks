@@ -26,13 +26,13 @@
 					</li>
 					{% if is_granted('ROLE_USER') %}
 						<li class="dropdown">
-							<a href="/addTrick" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
+							<a href="/nouvelle-figure" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
 							</a>
 						</li>
 					{% endif %}
 					{% if app.user %}
 						<li class="dropdown">
-							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown">Bonjour
+							<a href="/espace-membre" class="dropdown-toggle" data-hover="dropdown">Bonjour
 								{{ app.user.username }}
 							</a>
 						</li>
@@ -43,11 +43,11 @@
 
 					{% else %}
 						<li class="dropdown">
-							<a href="/login" class="dropdown-toggle" data-hover="dropdown">Se connecter
+							<a href="/connexion" class="dropdown-toggle" data-hover="dropdown">Se connecter
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="/register" class="dropdown-toggle" data-hover="dropdown">S'inscrire
+							<a href="/inscription" class="dropdown-toggle" data-hover="dropdown">S'inscrire
 							</a>
 						</li>
 					{% endif %}
@@ -103,13 +103,13 @@
 					</li>
 					{% if is_granted('ROLE_USER') %}
 						<li class="dropdown">
-							<a href="/newTrick" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Ajouter une figure
+							<a href="/nouvelle-figure" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Ajouter une figure
 							</a>
 						</li>
 					{% endif %}
 					{% if app.user %}
 						<li class="dropdown">
-							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Espace membre
+							<a href="/espace-membre" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Espace membre
 							</a>
 						</li>
 						<li class="dropdown">
@@ -119,11 +119,11 @@
 
 					{% else %}
 						<li class="dropdown">
-							<a href="/login" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Se connecter
+							<a href="/connexion" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Se connecter
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="/register" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>S'inscrire
+							<a href="/inscription" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>S'inscrire
 							</a>
 						</li>
 					{% endif %}

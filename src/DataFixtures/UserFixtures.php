@@ -15,7 +15,7 @@ class UserFixtures extends Fixture
             $user = (new User())
                 ->setUsername('test n°' . $i . '')
                 ->setEmail('nozalstorn' . $i . '@hotmail.fr')
-                ->setPassword('15071990aA@')
+                ->setPassword('12345aB6987@')
                 ->setRoles(['ROLE_USER'])
                 ->setAvatar('IMG_AVATAR')
                 ->setToken(new Token());

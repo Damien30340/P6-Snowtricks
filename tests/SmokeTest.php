@@ -21,11 +21,14 @@ class SmokeTest extends WebTestCase
     public function urlProvider()
     {
         yield ['/'];
-        yield ['/newFigure'];
-        yield ['/login'];
-        yield ['/register'];
-        yield ['/member_area'];
-        yield ['/deleteAccount'];
+        yield ['/nouvelle-figure'];
+        yield ['/connexion'];
+        yield ['/inscription'];
+        yield ['/confirmation-compte'];
+        yield ['/espace-membre'];
+        yield ['/mdp-oublie'];
+        yield ['/mdp-reinitialise'];
+
         // ...
     }
 }

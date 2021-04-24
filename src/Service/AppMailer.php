@@ -44,24 +44,7 @@ class AppMailer
         $this->mailer->send($email);
     }
 
-    public function sendResetPassMail(User $user)
-    {
-        $email = (new Email())
-            ->from('contact@damiengobert.fr')
-            ->to($user->getEmail())
-            ->subject('Récupération de mot de passe : ' . $user->getUsername())
-            ->html('<p>
-        Récupération de votre mot de passe ! 
-        <br><br>
-        Bonjour, ' . $user->getUsername() . ', une demande de récupération de mot de passe à été demandé, si vous n\'êtes pas à l\'initiave de celle ci, ne cliquez pas sur ce lien. 
-        <br><br>
-        Lien de réinitialisation : <a href="http://localhost:8000/confirmResetPass&' . $user->getToken()->getContent() . '">http://localhost:8000/confirmResetPass&' . $user->getToken()->getContent() . '</a>
-        <br>Token édité le ' . $user->getToken()->getCreatedAt()->format('d-m-Y') . ' </p>');
-
-        $this->mailer->send($email);
-    }
-
-    public function sendConfirmAccount(User $user)
+    public function sendConfirmAccountMail(User $user)
     {
         $email = (new Email())
             ->from('contact@damiengobert.fr')
@@ -75,7 +58,23 @@ class AppMailer
         $this->mailer->send($email);
     }
 
-    public function sendDeleteAccount(User $user)
+    public function sendResetPassMail(User $user)
+    {
+        $email = (new Email())
+            ->from('contact@damiengobert.fr')
+            ->to($user->getEmail())
+            ->subject('Récupération de mot de passe : ' . $user->getUsername())
+            ->html('<p>
+        Récupération de votre mot de passe ! 
+        <br><br>
+        Bonjour, ' . $user->getUsername() . ', une demande de récupération de mot de passe à été demandé, si vous n\'êtes pas à l\'initiave de celle ci, ne cliquez pas sur ce lien. 
+        <br><br>
+        Lien de réinitialisation : <a href="http://localhost:8000/mdp-reinitialise&' . $user->getId() . '&' . $user->getToken()->getContent() . '">http://localhost:8000/mdp-reinitialise&' . $user->getId() . '&' . $user->getToken()->getContent() . '</a>');
+
+        $this->mailer->send($email);
+    }
+
+    public function sendDeleteAccountMail(User $user)
     {
         $email = (new Email())
             ->from('contact@damiengobert.fr')
