@@ -70,39 +70,37 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/confirmation-compte&{id}&{token}", name="app_confirm_token")
+     * @Route("/confirmation-compte/{content}", name="app_confirm_token")
      */
-    public function confirmAccount($id, $token, TokenManager $tokenManager, EntityManagerInterface $manager, UserRepository $userRepository, AppMailer $mailer): Response
+    public function confirmAccount(Token $token, EntityManagerInterface $manager, AppMailer $mailer): Response
     {
-        $user = $userRepository->findOneBy(['id' => $id]);
-        if ($user->getToken()->getContent() === $token) {
+        if ($user = $token->getUser()) {
             $user->setRoles(['ROLE_USER']);
-            $tokenManager->nullableToken($user);
+            $user->setToken(null);
         }
-        $manager->persist($user, $tokenManager);
+        $manager->remove($token);
+        $manager->persist($user);
         $manager->flush();
 
         $mailer->sendConfirmAccountMail($user);
 
-        return $this->render(
-            'security/confirmAccount.html.twig',
-            ['user' => $user]
-        );
+        $this->addFlash('notice', 'Votre compte est actif, veuillez vous conneter avec vos identifiants !');
+        return $this->redirectToRoute('app_login');
     }
 
     /**
      * @Route("/mdp-oublie", name="app_forgot_password")
      */
-    public function ForgotPassword(Request $request, AppMailer $mailer, TokenManager $token, UserRepository $userRepository): Response
+    public function ForgotPassword(Request $request, EntityManagerInterface $manager, UserRepository $userRepository, AppMailer $mailer): Response
     {
-        $user = new User();
-        $form = $this->createForm(ForgotPasswordType::class, $user);
+        $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
-        if ($form->isSubmitted()) {
-            if ($userRepository->findOneBy(["email" => $user->getEmail()])) {
-                $user = $userRepository->findOneBy(["email" => $user->getEmail()]);
-                if ($user->getToken()->getContent() === null && $user->getToken()->getCreatedAt() === null) {
-                    $token->generateTokenResetPass($user);
+        if ($form->isSubmitted() && $form->isValid()) {
+            if ($user = $userRepository->findOneBy(["email" => $form->getData()['email']])) {
+                if ($user->getToken() === null) {
+                    $user->setToken(new Token());
+                    $manager->persist($user);
+                    $manager->flush();
                     $mailer->sendResetPassMail($user);
                     $this->addFlash('notice', 'Réinitialisation envoyée : <br>Merci de vérifier votre adresse mail');
                 } else {
@@ -111,6 +109,7 @@ class SecurityController extends AbstractController
             } else {
                 $this->addFlash('warning', "Adresse email inconnu !");
             }
+            return $this->redirectToRoute('app_login');
         }
         return $this->render('security/forgot_password.html.twig', [
             'form' => $form->createView()
@@ -118,38 +117,24 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/mdp-reinitialise&{id}&{token}", name="app_reset_password")
+     * @Route("/mdp-reinitialise/{content}", name="app_reset_password")
      */
-    public function ResetPassword($id, $token, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Request $request, UserRepository $userRepository, TokenManager $tokenManager)
+    public function resetPassword(Token $token, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Request $request)
     {
-        if ($userRepository->findOneBy(["id" => $id])) {
-            $user = $userRepository->findOneBy(["id" => $id]);
-            if ($user->getToken()->getContent()) {
-                $form = $this->createForm(ResetPasswordType::class, $user);
-                $form->handleRequest($request);
-                if ($form->isSubmitted()) {
-                    if ($user->getToken()->getContent() === $token) {
-                        $tokenManager->nullableToken($user);
-                        $hash = $encoder->encodePassword($user, $user->getPassword());
-                        $user->setPassword($hash);
-                        $manager->persist($user);
-                        $manager->flush();
-                        $this->addFlash('notice', 'Mot de passe modifié');
-                    } else {
-                        $this->addFlash('warning', 'Erreur : Les jetons ne correspondent pas !!!');
-                    }
-                }
-                return $this->render('security/reset_password.html.twig', [
-                    'form' => $form->createView()
-                ]);
-            } else {
-                $this->addFlash('warning', 'Erreur : Le lien n\'est pas valide !');
-                return $this->render('security/reset_password.html.twig');
-            }
-        } else {
-            $this->addFlash('warning', 'Erreur : aucun compte corréspondant !!!');
-            return $this->render('security/reset_password.html.twig');
+        $form = $this->createForm(ResetPasswordType::class);
+        $form->handleRequest($request);
+        if ($form->isSubmitted() && $form->isValid()) {
+            $user = $token->getUser();
+            $user->setToken(null)->setPassword($encoder->encodePassword($user, $form->getData()['password']));
+            $manager->remove($token);
+            $manager->persist($user);
+            $manager->flush();
+            $this->addFlash('notice', 'Mot de passe modifié');
+            return $this->redirectToRoute('app_login');
         }
+        return $this->render('security/reset_password.html.twig', [
+            'form' => $form->createView()
+        ]);
     }
 
     /**

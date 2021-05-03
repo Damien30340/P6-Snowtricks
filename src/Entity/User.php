@@ -2,6 +2,8 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -10,6 +12,7 @@ use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 
 /**
  * @ORM\Entity(repositoryClass=UserRepository::class)
+ * @UniqueEntity("email")
  */
 class User implements UserInterface
 {
@@ -67,7 +70,7 @@ class User implements UserInterface
     private $avatar;
 
     /**
-     * @ORM\OneToOne(targetEntity=Token::class, cascade={"persist", "remove"})
+     * @ORM\OneToOne(targetEntity=Token::class, cascade={"persist", "remove"}, inversedBy="user")
      */
     private $token;
 

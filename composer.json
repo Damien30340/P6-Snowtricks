@@ -79,8 +79,7 @@
         "reset": [
             "symfony console d:d:d --force --if-exists",
             "symfony console d:d:c",
-            "symfony console d:s:c",
-            "symfony console d:f:l --append -q"
+            "symfony console d:m:m"
         ],
         "srv": [
             "symfony server:start"
