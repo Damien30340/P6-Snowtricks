@@ -14,6 +14,8 @@ use Doctrine\Persistence\ManagerRegistry;
  */
 class TrickRepository extends ServiceEntityRepository
 {
+    const LIMIT_PER_PAGE = 6;
+
     public function __construct(ManagerRegistry $registry)
     {
         parent::__construct($registry, Trick::class);
@@ -47,4 +49,33 @@ class TrickRepository extends ServiceEntityRepository
         ;
     }
     */
+
+    public function getPaginatedTricks($page, $limit)
+    {
+        $query = $this->createQueryBuilder('t')
+            // ->where('t = 1')
+            ->orderBy('t.createdAt')
+            ->setFirstResult(($page * $limit) - $limit)
+            ->setMaxResults($limit);
+
+        return $query->getQuery()->getResult();
+    }
+
+    public function getTotalTricks()
+    {
+        $query = $this->createQueryBuilder('t')
+            ->select('COUNT(t)');
+        // ->where('a.active = 1');
+
+        return $query->getQuery()->getSingleScalarResult();
+    }
+
+    public function getLoadMoreTrick($page)
+    {
+        return $this->createQueryBuilder('t')
+            ->setMaxResults(self::LIMIT_PER_PAGE)
+            ->setFirstResult(self::LIMIT_PER_PAGE * ($page - 1))
+            ->getQuery()
+            ->getResult();
+    }
 }

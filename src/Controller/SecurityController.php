@@ -36,7 +36,7 @@ class SecurityController extends AbstractController
             $user->setToken(new Token());
             $manager->persist($user);
             $manager->flush();
-            $this->addFlash('notice', 'Inscription effectué, veuillez vérifier votre boite email !');
+            $this->addFlash('notice', 'Inscription effectuée, veuillez vérifier votre boite email !');
             $mailer->sendRegisterMail($user);
         }
         return $this->render('security/register.html.twig', [
@@ -96,6 +96,7 @@ class SecurityController extends AbstractController
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
+            // TODO voir pour refactoring
             if ($user = $userRepository->findOneBy(["email" => $form->getData()['email']])) {
                 if ($user->getToken() === null) {
                     $user->setToken(new Token());
@@ -123,6 +124,7 @@ class SecurityController extends AbstractController
     {
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
+        // TODO voir pour refactoring
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $token->getUser();
             $user->setToken(null)->setPassword($encoder->encodePassword($user, $form->getData()['password']));

@@ -53,6 +53,84 @@
 					{% endif %}
 					<li>
 						<a href="#search">
+						<i class="pe-7s-search"></i>
+						</a>
+					</li>
+					<li>
+						<a href="javascript:void(0);" class="side-menu-trigger hidden-xs">
+							<i class="fa fa-bars"></i>
+						</a>
+					</li>
+				</ul>
+			</div>
+			<!-- /.navbar-collapse -->
+		</div>
+		<!-- /.container-fluid -->
+	</nav>
+
+	<div id="search-wrapper">
+		<button type="button" class="close">×</button>
+		<div class="vertical-center text-center">
+			<form>
+				<input type="search" value="" placeholder="Enter Search Term"/>
+				<button type="submit" class="btn btn-primary btn-white">Search</button>
+			</form>
+		</div>
+	</div>
+{% elseif app.request.get('_route') == 'app_trick'%}
+	<nav
+			class="navbar navbar-default navbar-fixed-top fadeInDown" data-wow-delay="0.5s">
+		<!-- Module social network -->
+		<div
+				class="container">
+			<!-- Brand and toggle get grouped for better mobile display -->
+			<div class="navbar-header page-scroll">
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#main-navigation">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<a class="navbar-brand smoothie logo logo-light" href="/"><img src="{{ asset('assets/img/snowtricks_logo.png') }}" alt="logo"></a>
+				<a class="navbar-brand smoothie logo logo-dark" href="/"><img src="{{ asset('assets/img/snowtricks_logo_reverse.png') }}" alt="logo"></a>
+			</div>
+
+			<!-- Collect the nav links, forms, and other content for toggling -->
+			<div class="collapse navbar-collapse" id="main-navigation">
+				<ul class="nav navbar-nav navbar-right">
+					<li class="dropdown">
+						<a href="/" class="dropdown-toggle">Accueil
+						</a>
+					</li>
+					{% if is_granted('ROLE_USER') %}
+						<li class="dropdown">
+							<a href="/nouvelle-figure" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
+							</a>
+						</li>
+					{% endif %}
+					{% if app.user %}
+						<li class="dropdown">
+							<a href="/espace-membre" class="dropdown-toggle" data-hover="dropdown">Bonjour
+								{{ app.user.username }}
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="{{ path('app_logout') }}" class="dropdown-toggle" data-hover="dropdown">Se deconnecter
+							</a>
+						</li>
+
+					{% else %}
+						<li class="dropdown">
+							<a href="/connexion" class="dropdown-toggle" data-hover="dropdown">Se connecter
+							</a>
+						</li>
+						<li class="dropdown">
+							<a href="/inscription" class="dropdown-toggle" data-hover="dropdown">S'inscrire
+							</a>
+						</li>
+					{% endif %}
+					<li>
+						<a href="#search">
 							<i class="pe-7s-search"></i>
 						</a>
 					</li>

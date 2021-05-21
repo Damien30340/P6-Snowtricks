@@ -6,9 +6,11 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @ORM\Table(name="trick", indexes={@ORM\Index(columns={"name", "content"}, flags={"fulltext"})})
  */
 class Trick
 {
@@ -16,21 +18,25 @@ class Trick
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"loadMore"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"loadMore"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"loadMore"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"loadMore"})
      */
     private $createdAt;
 
@@ -46,6 +52,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=TrickPicture::class, mappedBy="trick")
+     * @var Collection<int, TrickPicture>
      */
     private $trickPictures;
 
@@ -183,5 +190,12 @@ class Trick
         }
 
         return $this;
+    }
+
+
+
+    public function getDefaultPictureFilename(){
+        $first =  $this->trickPictures->first();
+        return $first ? $first->getFilename() : "assets/img/tricks/snowboard0.jpeg";
     }
 }

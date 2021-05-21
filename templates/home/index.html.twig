@@ -2,68 +2,113 @@
 
 {% block title %}Home
 {% endblock %}
-
+    {% block javascripts %}
+        <script src="{{ asset('assets/js/apiTrick.js') }}"></script>
+    {% endblock %}
 {% block body %}
-	<section>
-		<div class="section-inner">
-			<div class="container">
-				<div class="row">
-					<div class="col-md-6 mb100 wow">
-						<h2 class="section-heading">Toutes les figures</h2>
-					</div>
-				</div>
-				<div class="row">
-					{% for trick in tricks %}
-						<div class="col-sm-4 blog-item mb100 wow match-height">
-							<div class="row">
-								<div class="col-xs-12">
-									<div class="hover-item mb30">
-										<img src="{{trick.trickpictures.first.filename}}" class="img-responsive smoothie" alt="title">
-										<div class="overlay-item-caption smoothie"></div>
-										<div class="hover-item-caption smoothie">
-											<h3 class="vertical-center smoothie">
-												<a href="single-post-right-sidebar.html" class="smoothie btn btn-primary page-scroll" title="view article">Voir</a>
-											</h3>
-										</div>
-									</div>
-
-									<h2 class="post-title">{{trick.name}}</h2>
-									<div
-										class="item-metas text-muted mb30">
-										{# <span class="meta-item">
-																																																																																																																																																																																																																																																																																																																						<i class="pe-icon pe-7s-folder"></i>
-																																																																																																																																																																																																																																																																																																																						Posté dans
-																																																																																																																																																																																																																																																																																																																						<span>News</span>
-																																																																																																																																																																																																																																																																																																																					</span> #}
-										<span class="meta-item">
+    <section>
+        <div class="section-inner">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 mb100 wow">
+                        <h2 class="section-heading">Toutes les figures</h2>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="tricklistDefault">
+                        {% for trick in tricks %}
+                            <div class="col-sm-4 blog-item mb100 wow match-height">
+                                <div class="row">
+                                    <div class="col-xs-12">
+                                        <div class="hover-item mb30" style="width: 100%; height: 242px;">
+                                            <img src="{{ trick.defaultPictureFilename }}"
+                                                 class="img-responsive smoothie" alt="title">
+                                            <div class="overlay-item-caption smoothie"></div>
+                                            <div class="hover-item-caption smoothie">
+                                                <h3 class="vertical-center smoothie">
+                                                    <a href="/trick/{{ trick.id }}"
+                                                       class="smoothie btn btn-primary page-scroll"
+                                                       title="view article">Voir</a>
+                                                </h3>
+                                            </div>
+                                        </div>
+                                        <h2 class="post-title">{{ trick.name }}</h2>
+                                        <div class="item-metas text-muted mb30">
+                                            {# <span class="meta-item">
+                                            <i class="pe-icon pe-7s-folder"></i>
+											Posté dans
+											<span>News</span>
+										</span> #}
+                                            <span class="meta-item">
 											<i class="pe-icon pe-7s-ticket"></i>
 											Catégorie
-											<span>{{trick.category.name}}</span>
+											<span>{{ trick.category.name }}</span>
 										</span>
-										{# <span class="meta-item">
-																																																																																																																																																																																																																																																																																																																						<i class="pe-icon pe-7s-user"></i>
-																																																																																																																																																																																																																																																																																																																						Auteur
-																																																																																																																																																																																																																																																																																																																						<span>Danny Jones</span>
-																																																																																																																																																																																																																																																																																																																					</span> #}
-										<span class="meta-item">
+                                            {# <span class="meta-item">
+										    <i class="pe-icon pe-7s-user"></i>
+										    Auteur
+										    <span>Danny Jones</span>
+										</span> #}
+                                        </div>
+                                        <div class="item-metas text-muted mb30">
+                                        <span class="meta-item">
 											<i class="pe-icon pe-7s-comment"></i>
 											Commentaires
 											<span>0</span>
 										</span>
-									</div>
-									<p>{{trick.content}}</p>
-									<a class="btn btn-primary mt30" href="single-post-right-sidebar.html">Lire plus</a>
-								</div>
-							</div>
-						</div>
-					{% endfor %}
+                                        </div>
+                                        <p class="post-content">{{ trick.content }}</p>
+                                        <a class="btn btn-primary mt30" href="/trick/{{ trick.id }}">Lire plus</a>
+                                    </div>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <template id="tricklist">
+                        <div class="col-sm-4 blog-item mb100 wow match-height">
+                            <div class="row">
+                                <div class="col-xs-12">
+                                    <div class="hover-item mb30" style="width: 100%; height: 242px;">
+                                        <img src="" class="img-responsive smoothie" alt="title" >
+                                        <div class="overlay-item-caption smoothie"></div>
+                                        <div class="hover-item-caption smoothie">
+                                            <h3 class="vertical-center smoothie" style="padding-top: 113.899px;">
+                                                <a href="" class="smoothie btn btn-primary page-scroll"
+                                                   title="view article">Voir</a>
+                                            </h3>
+                                        </div>
+                                    </div>
+                                    <h2 class="post-title"></h2>
+                                    <div class="item-metas text-muted mb30">
+                                            <span class="meta-item">
+                                                <i class="pe-icon pe-7s-ticket"></i>
+                                                Catégorie
+                                                <span class="post-category"></span>
+                                            </span>
+                                    </div>
+                                    <div class="item-metas text-muted mb30">
+                                        <span class="meta-item">
+                                                <i class="pe-icon pe-7s-comment"></i>
+                                                Commentaires
+                                                <span>0</span>
+                                            </span>
+                                    </div>
 
-				</div>
+                                    <p class="post-content"></p>
+                                    <a class="btn btn-primary mt30" href="">Lire plus</a>
+                                </div>
+                            </div>
+                        </div>
+                    </template>
 
-				<div class="row paging text-center">
-					<a class="btn btn-primary mt30" href="#">PLus de figures</a>
-				</div>
-			</div>
-		</div>
-	</section>
+                </div>
+                <div class="row paging text-center">
+                    <a class="btn btn-primary mt30 ajaxButton" href="#">Charger plus</a>
+                    <img id="loadMoreGif" src="{{ asset('assets/img/loading.GIF') }}" alt="loading"
+                         style="display: none;">
+                </div>
+            </div>
+        </div>
+    </section>
 {% endblock %}
+
