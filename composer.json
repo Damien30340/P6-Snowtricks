@@ -1,10 +1,12 @@
 {
+    "name": "damine/snwotrick",
+    "description": "Snowtricks",
     "type": "project",
     "license": "proprietary",
     "minimum-stability": "dev",
     "prefer-stable": true,
     "require": {
-        "php": ">=7.2.5",
+        "php": ">=7.4",
         "ext-ctype": "*",
         "ext-iconv": "*",
         "composer/package-versions-deprecated": "1.11.99.1",
@@ -79,8 +81,7 @@
         "reset": [
             "symfony console d:d:d --force --if-exists",
             "symfony console d:d:c",
-            "symfony console d:s:c",
-            "symfony console d:f:l --append -q"
+            "symfony console d:m:m"
         ],
         "srv": [
             "symfony server:start"

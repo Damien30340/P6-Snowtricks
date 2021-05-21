@@ -16,7 +16,6 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
  *
  * @IsGranted("ROLE_USER")
  */
-
 class MemberAreaController extends AbstractController
 {
     /**
@@ -25,14 +24,14 @@ class MemberAreaController extends AbstractController
     public function index(Request $request, EntityManagerInterface $manager, UserInterface $user): Response
     {
         $user->getUsername();
-        $form = $this->createForm(UpdateMemberType::class, $user);
+        $form = $this->createForm(UpdateMemberType::class);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $manager->persist($user);
         }
 
 
-        return $this->render('member_area/index.html.twig', [
+        return $this->render('member_area/member_area.html.twig', [
             'user' => $user,
             'form' => $form->createView()
         ]);

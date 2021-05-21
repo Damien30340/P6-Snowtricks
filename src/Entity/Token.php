@@ -5,6 +5,7 @@ namespace App\Entity;
 use App\Repository\TokenRepository;
 use DateTime;
 use Doctrine\ORM\Mapping as ORM;
+use App\Entity\User;
 
 /**
  * @ORM\Entity(repositoryClass=TokenRepository::class)
@@ -19,14 +20,24 @@ class Token
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=255, nullable=true)
+     * @ORM\Column(type="string", length=255)
      */
     private $content;
 
     /**
-     * @ORM\Column(type="datetime", nullable=true)
+     * @ORM\Column(type="datetime")
      */
     private $createdAt;
+
+    /** 
+     * @ORM\OneToOne(targetEntity=User::class, mappedBy="token")
+     */
+    private User $user;
+
+    public function getUser()
+    {
+        return $this->user;
+    }
 
 
     public function __construct()
