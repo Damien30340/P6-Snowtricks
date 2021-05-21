@@ -6,9 +6,11 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Serializer\Annotation\Groups;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
+ * @ORM\Table(name="trick", indexes={@ORM\Index(columns={"name", "content"}, flags={"fulltext"})})
  */
 class Trick
 {
@@ -16,21 +18,25 @@ class Trick
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
+     * @Groups({"loadMore"})
      */
     private $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Groups({"loadMore"})
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
+     * @Groups({"loadMore"})
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
+     * @Groups({"loadMore"})
      */
     private $createdAt;
 
@@ -46,6 +52,7 @@ class Trick
 
     /**
      * @ORM\OneToMany(targetEntity=TrickPicture::class, mappedBy="trick")
+     * @var Collection<int, TrickPicture>
      */
     private $trickPictures;
 
@@ -54,16 +61,10 @@ class Trick
      */
     private $trickVideos;
 
-    /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="trick")
-     */
-    private $comments;
-
     public function __construct()
     {
         $this->trickPictures = new ArrayCollection();
         $this->trickVideos = new ArrayCollection();
-        $this->comments = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -191,33 +192,10 @@ class Trick
         return $this;
     }
 
-    /**
-     * @return Collection|Comment[]
-     */
-    public function getComments(): Collection
-    {
-        return $this->comments;
-    }
 
-    public function addComment(Comment $comment): self
-    {
-        if (!$this->comments->contains($comment)) {
-            $this->comments[] = $comment;
-            $comment->setTrick($this);
-        }
 
-        return $this;
-    }
-
-    public function removeComment(Comment $comment): self
-    {
-        if ($this->comments->removeElement($comment)) {
-            // set the owning side to null (unless already changed)
-            if ($comment->getTrick() === $this) {
-                $comment->setTrick(null);
-            }
-        }
-
-        return $this;
+    public function getDefaultPictureFilename(){
+        $first =  $this->trickPictures->first();
+        return $first ? $first->getFilename() : "assets/img/tricks/snowboard0.jpeg";
     }
 }
