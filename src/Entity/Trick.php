@@ -7,6 +7,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Serializer\Annotation\Groups;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
@@ -25,18 +26,33 @@ class Trick
     /**
      * @ORM\Column(type="string", length=255)
      * @Groups({"loadMore"})
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 2,
+     *      max = 30,
+     *      minMessage = "Le titre doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le titre ne doit pas dépasser les {{ limit }} caractères"
+     * )
      */
     private $name;
 
     /**
      * @ORM\Column(type="text")
      * @Groups({"loadMore"})
+     * @Assert\NotBlank
+     * @Assert\Length(
+     *      min = 10,
+     *      max = 500,
+     *      minMessage = "La déscription doit contenir au minimum {{ limit }} caractères",
+     *      maxMessage = "Le titre ne doit pas dépasser les {{ limit }} caractères"
+     * )
      */
     private $content;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"loadMore"})
+     * @Assert\NotBlank
      */
     private $createdAt;
 
@@ -51,20 +67,24 @@ class Trick
     private $category;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickPicture::class, mappedBy="trick")
-     * @var Collection<int, TrickPicture>
+     * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
+     * @Assert\Valid()
+     * @var Collection<int, Picture>
      */
-    private $trickPictures;
+    private $pictures;
 
     /**
-     * @ORM\OneToMany(targetEntity=TrickVideo::class, mappedBy="trick")
+     * @ORM\OneToMany(targetEntity=Video::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"})
+     * @Assert\Valid()
+     * @var Collection<int, Video>
      */
-    private $trickVideos;
+    private $videos;
 
     public function __construct()
     {
-        $this->trickPictures = new ArrayCollection();
-        $this->trickVideos = new ArrayCollection();
+        $this->pictures = new ArrayCollection();
+        $this->videos = new ArrayCollection();
+        $this->createdAt = new \DateTime();
     }
 
     public function getId(): ?int
@@ -133,29 +153,29 @@ class Trick
     }
 
     /**
-     * @return Collection|TrickPicture[]
+     * @return Collection|Picture[]
      */
-    public function getTrickPictures(): Collection
+    public function getPictures(): Collection
     {
-        return $this->trickPictures;
+        return $this->pictures;
     }
 
-    public function addTrickPicture(TrickPicture $trickPicture): self
+    public function addPicture(Picture $picture): self
     {
-        if (!$this->trickPictures->contains($trickPicture)) {
-            $this->trickPictures[] = $trickPicture;
-            $trickPicture->setTrick($this);
+        if (!$this->pictures->contains($picture)) {
+            $this->pictures[] = $picture;
+            $picture->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeTrickPicture(TrickPicture $trickPicture): self
+    public function removePicture(Picture $picture): self
     {
-        if ($this->trickPictures->removeElement($trickPicture)) {
+        if ($this->pictures->removeElement($picture)) {
             // set the owning side to null (unless already changed)
-            if ($trickPicture->getTrick() === $this) {
-                $trickPicture->setTrick(null);
+            if ($picture->getTrick() === $this) {
+                $picture->setTrick(null);
             }
         }
 
@@ -163,29 +183,29 @@ class Trick
     }
 
     /**
-     * @return Collection|TrickVideo[]
+     * @return Collection|Video[]
      */
-    public function getTrickVideos(): Collection
+    public function getVideos(): Collection
     {
-        return $this->trickVideos;
+        return $this->videos;
     }
 
-    public function addTrickVideo(TrickVideo $trickVideo): self
+    public function addVideo(Video $video): self
     {
-        if (!$this->trickVideos->contains($trickVideo)) {
-            $this->trickVideos[] = $trickVideo;
-            $trickVideo->setTrick($this);
+        if (!$this->videos->contains($video)) {
+            $this->videos[] = $video;
+            $video->setTrick($this);
         }
 
         return $this;
     }
 
-    public function removeTrickVideo(TrickVideo $trickVideo): self
+    public function removeVideo(Video $video): self
     {
-        if ($this->trickVideos->removeElement($trickVideo)) {
+        if ($this->videos->removeElement($video)) {
             // set the owning side to null (unless already changed)
-            if ($trickVideo->getTrick() === $this) {
-                $trickVideo->setTrick(null);
+            if ($video->getTrick() === $this) {
+                $video->setTrick(null);
             }
         }
 
@@ -194,8 +214,8 @@ class Trick
 
 
 
-    public function getDefaultPictureFilename(){
-        $first =  $this->trickPictures->first();
+    public function getDefaultPicture(){
+        $first =  $this->pictures->first();
         return $first ? $first->getFilename() : "assets/img/tricks/snowboard0.jpeg";
     }
 }

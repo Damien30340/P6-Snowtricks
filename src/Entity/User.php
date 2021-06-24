@@ -2,8 +2,6 @@
 
 namespace App\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use App\Repository\UserRepository;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -45,7 +43,7 @@ class User implements UserInterface
      * @ORM\Column(type="string")
      * @Assert\Regex(
      * "/^(?=.*[A-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[$@])(?!.*[iIoO])\S{6,20}$/",
-     * message="Votre mot de passe est incorrect")
+     * message="Votre mot de passe ne répond pas aux éxigences de sécurités")
      * @Assert\NotBlank()
      */
     private $password;
@@ -198,7 +196,7 @@ class User implements UserInterface
 
     public function setAvatar(?string $avatar): self
     {
-        $this->avatar = $avatar;
+        $this->avatar = '/uploads' . $avatar;
 
         return $this;
     }

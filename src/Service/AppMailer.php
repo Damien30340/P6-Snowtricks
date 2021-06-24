@@ -38,7 +38,7 @@ class AppMailer
         <br>
         Password : Celui que vous avez renseigné lors de votre inscription !
         <br><br>
-        Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost:8000/confirmation-compte/' . $user->getToken()->getContent() . '">http://localhost:8000/confirmation-compte/' . $user->getToken()->getContent() . '</a>
+        Cliquez sur le lien suivant pour activer votre compte : <a href="http://localhost:8000/confirm-account/' . $user->getToken()->getContent() . '">http://localhost:8000/confirm-account/' . $user->getToken()->getContent() . '</a>
         <br>Token édité le ' . $user->getToken()->getCreatedAt()->format('d-m-Y') . ' </p>');
 
         $this->mailer->send($email);
@@ -53,7 +53,7 @@ class AppMailer
             ->html('<p>
         Votre compte a bien été activé ! 
         <br><br>
-        <a href="http://localhost:8000/>http://Snowtricks/Symfony/</a></p>');
+        <a href="http://localhost:8000/http://Snowtricks/Symfony/</a></p>');
 
         $this->mailer->send($email);
     }
@@ -69,7 +69,7 @@ class AppMailer
         <br><br>
         Bonjour, ' . $user->getUsername() . ', une demande de récupération de mot de passe à été demandé, si vous n\'êtes pas à l\'initiave de celle ci, ne cliquez pas sur ce lien. 
         <br><br>
-        Lien de réinitialisation : <a href="http://localhost:8000/mdp-reinitialise/' . $user->getToken()->getContent() . '">http://localhost:8000/mdp-reinitialise/' . $user->getToken()->getContent() . '</a>');
+        Lien de réinitialisation : <a href="http://localhost:8000/reset-password/' . $user->getToken()->getContent() . '">http://localhost:8000/reset-password/' . $user->getToken()->getContent() . '</a>');
 
         $this->mailer->send($email);
     }

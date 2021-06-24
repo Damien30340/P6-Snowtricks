@@ -41,7 +41,7 @@ class UserFixtures extends Fixture
                 ->setEmail('test' . $index . '@hotmail.fr')
                 ->setRoles(['ROLE_USER'])
                 ->setAvatar('img/profil/avatar' . $index);
-            $user->setPassword($this->encoder->encodePassword($user, '12345aB6987@'));
+            $user->setPassword($this->encoder->encodePassword($user, '15071990aA@'));
             $manager->persist($user);
         }
         $manager->flush();
