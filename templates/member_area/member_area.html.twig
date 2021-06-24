@@ -9,7 +9,11 @@
 			<div class="col-md-4 col-md-push-4">
 				<h1>Bonjour
 					{{ user.username }}
+					{% if user.avatar is defined %}
+						<img src="{{ user.avatar }}" alt="" style="height: auto; width: 100px;">
+					{% endif %}
 				</h1>
+
 				<hr></div>
 		</div>
 		<div class="row">
@@ -33,5 +37,6 @@
 				<a href="/deleteAccount" class="btn btn-danger">Supprimer mon compte</a>
 			</div>
 		</div>
+		<br>
 	</div>
 {% endblock %}

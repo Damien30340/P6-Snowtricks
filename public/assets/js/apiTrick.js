@@ -27,11 +27,13 @@ document.addEventListener("DOMContentLoaded", function (e) {
         if (tricks.length > 0) {
             for (let i = 0; i < tricks.length; i++) {
                 let clone = document.importNode(template.content, true)
-                clone.querySelector(".post-title").innerHTML = `${tricks[i].name}`
-                clone.querySelector(".post-content").innerHTML = `${tricks[i].content.substr(0,50)}`
+                clone.querySelector(".post-title").innerHTML = `${tricks[i].name}<a href="trick/edit/${tricks[i].id}"><i class="bi bi-pen"></i></a>
+                                            <a href="trick/delete/${tricks[i].id}"><i class="bi bi-trash"></i></a>`
+                clone.querySelector(".post-content").innerHTML = `${tricks[i].content.substr(0, 50)}`
                 let a = clone.querySelectorAll("a")
-                a[0].outerHTML = `<a class="smoothie btn btn-primary page-scroll" title="view article" href="trick/${tricks[i].id}">Voir</a>`
-                a[1].outerHTML = `<a class="btn btn-primary mt30" href="trick/${tricks[i].id}">Lire plus</a>`
+                console.log(a);
+                a[0].outerHTML = `<a class="smoothie btn btn-primary page-scroll" title="view article" href="trick/show/${tricks[i].id}">Voir</a>`
+                a[3].outerHTML = `<a class="btn btn-primary mt30" href="trick/show/${tricks[i].id}">Lire plus</a>`
                 clone.querySelector("img").outerHTML = `<img src="${picture[i]}" class="img-responsive smoothie" alt="title">`
                 clone.querySelector(".post-category").innerHTML = `${category[i]}`
 
@@ -45,4 +47,6 @@ document.addEventListener("DOMContentLoaded", function (e) {
             gif.style.display = "none"
         }
     })
+
+
 })

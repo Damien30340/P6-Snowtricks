@@ -15,4 +15,3 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /templates/test
-/src/Service/TokenManager.php

@@ -2,25 +2,25 @@
 
 namespace App\Repository;
 
-use App\Entity\TrickVideo;
+use App\Entity\Picture;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
 use Doctrine\Persistence\ManagerRegistry;
 
 /**
- * @method TrickVideo|null find($id, $lockMode = null, $lockVersion = null)
- * @method TrickVideo|null findOneBy(array $criteria, array $orderBy = null)
- * @method TrickVideo[]    findAll()
- * @method TrickVideo[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
+ * @method Picture|null find($id, $lockMode = null, $lockVersion = null)
+ * @method Picture|null findOneBy(array $criteria, array $orderBy = null)
+ * @method Picture[]    findAll()
+ * @method Picture[]    findBy(array $criteria, array $orderBy = null, $limit = null, $offset = null)
  */
-class TrickVideoRepository extends ServiceEntityRepository
+class PictureRepository extends ServiceEntityRepository
 {
     public function __construct(ManagerRegistry $registry)
     {
-        parent::__construct($registry, TrickVideo::class);
+        parent::__construct($registry, Picture::class);
     }
 
     // /**
-    //  * @return TrickVideo[] Returns an array of TrickVideo objects
+    //  * @return TrickPicture[] Returns an array of TrickPicture objects
     //  */
     /*
     public function findByExampleField($value)
@@ -37,7 +37,7 @@ class TrickVideoRepository extends ServiceEntityRepository
     */
 
     /*
-    public function findOneBySomeField($value): ?TrickVideo
+    public function findOneBySomeField($value): ?TrickPicture
     {
         return $this->createQueryBuilder('t')
             ->andWhere('t.exampleField = :val')
