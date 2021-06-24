@@ -2,28 +2,32 @@
 
 namespace App\Entity;
 
-use App\Repository\TrickVideoRepository;
+use App\Repository\VideoRepository;
+use App\Validator\VideoEmbedLink;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 /**
- * @ORM\Entity(repositoryClass=TrickVideoRepository::class)
+ * @ORM\Entity(repositoryClass=VideoRepository::class)
  */
-class TrickVideo
+class Video
 {
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
+     * @Assert\NotBlank()
+     * @VideoEmbedLink()
      */
-    private $url;
+    private string $url;
 
     /**
-     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="trickVideos")
+     * @ORM\ManyToOne(targetEntity=Trick::class, inversedBy="videos")
      */
     private $trick;
 

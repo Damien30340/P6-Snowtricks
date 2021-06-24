@@ -680,7 +680,8 @@ fieldset[disabled] .btn-primary.active {
 
 #headerwrap {
     background-color: #f3f3f3;
-    overflow: hidden
+    overflow: hidden;
+    background-image: url("assets/img/bg/bg2.jpg");
 }
 
 .opaque {

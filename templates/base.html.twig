@@ -20,6 +20,7 @@
         <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/img/ico/apple-touch-icon-114x114.png') }}">
         <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/img/ico/apple-touch-icon-72x72.png') }}">
         <link rel="apple-touch-icon" href="{{ asset('assets/img/ico/apple-touch-icon-57x57.png') }}">
+        <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
 
         <title>Snowtricks</title>
 
@@ -40,6 +41,7 @@
     {% block javascripts %}
         {# {{ encore_entry_script_tags('app') }} #}
     {% endblock %}
+    <script src="{{ asset('assets/js/plugin.js') }}"></script>
 </head>
 
 
@@ -50,7 +52,7 @@
     {% if app.request.get('_route') == 'app_home' %}
         {% include "header.html.twig" %}
     {% endif %}
-    {% include "plugin.html.twig" %}
+
 
     <div class="preloader">
         <div class="preloader-img">
@@ -65,27 +67,19 @@
     {% include "footer.html.twig" %}
 </div>
 
-<script src="{{ asset('assets/js/jquery.js') }}"></script>
+
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
-{% if app.request.get('_route') == 'app_home' %}
-    <script src="{{ asset('assets/js/plugins.js') }}"></script>
-	{% elseif app.request.get('_route') == 'app_trick' %}
-    <script src="{{ asset('assets/js/plugins.js') }}"></script>
-	{% else %}
-    <script src="{{ asset('assets/js/plugins_reducs.js') }}"></script>
-{% endif %}
-<script type="text/javascript" src="http://maps.google.com/maps/api/js?sensor=false"></script>
-<script src="{{ asset('assets/js/init.js') }}"></script>
-<script type="text/javascript">
-    $(document).ready(function () {
-        'use strict';
-        jQuery('#headerwrap').backstretch([
-            "{{ asset('assets/img/bg/bg2.jpg') }}", "{{ asset('assets/img/bg/bg3.jpg') }}", "{{ asset('assets/img/bg/bg4.jpg') }}",
-        ], {
-            duration: 7000,
-            fade: 500
-        });
-    });
-</script>
+
+{#<script type="text/javascript">#}
+{#    $(document).ready(function () {#}
+{#        'use strict';#}
+{#        jQuery('#headerwrap').backstretch([#}
+{#            "{{ asset('assets/img/bg/bg2.jpg') }}", "{{ asset('assets/img/bg/bg3.jpg') }}", "{{ asset('assets/img/bg/bg4.jpg') }}",#}
+{#        ], {#}
+{#            duration: 7000,#}
+{#            fade: 500#}
+{#        });#}
+{#    });#}
+{#</script>#}
 </body>
 </html>

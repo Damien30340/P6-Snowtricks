@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Repository\TrickRepository;
-use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
@@ -18,7 +17,7 @@ use Symfony\Component\Routing\Annotation\Route;
 class ApiController extends AbstractController
 {
     /**
-     * @Route("/tricks", name="test")
+     * @Route("/tricks", name="api_trick")
      * @param TrickRepository $trickRepository
      * @return Response
      */
@@ -32,7 +31,7 @@ class ApiController extends AbstractController
 
         for ($i = 0; $i < count($tricks); $i++){
             $category = $tricks[$i]->getCategory()->getName();
-            $picture = $tricks[$i]->getdefaultPictureFilename();
+            $picture = $tricks[$i]->getDefaultPicture();
             array_push($categories, $category);
             array_push($pictures, $picture);
         }

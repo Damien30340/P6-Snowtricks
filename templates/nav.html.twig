@@ -1,7 +1,7 @@
 <!-- Navigation -->
-{% if app.request.get('_route') == 'app_home' %}
+{% if app.request.get('_route') == 'app_home' or app.request.get('_route') == 'app_show_trick' %}
 	<nav
-		class="navbar navbar-default navbar-fixed-top fadeInDown" data-wow-delay="0.5s">
+		class="navbar navbar-default navbar-fixed-top fadeInDown" data-wow-delay="0.5s" style="background-color: black; opacity: 90%;">
 		<!-- Module social network -->
 		<div
 			class="container">
@@ -26,13 +26,13 @@
 					</li>
 					{% if is_granted('ROLE_USER') %}
 						<li class="dropdown">
-							<a href="/nouvelle-figure" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
+							<a href="/trick/add" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
 							</a>
 						</li>
 					{% endif %}
 					{% if app.user %}
 						<li class="dropdown">
-							<a href="/espace-membre" class="dropdown-toggle" data-hover="dropdown">Bonjour
+							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown">Bonjour
 								{{ app.user.username }}
 							</a>
 						</li>
@@ -43,24 +43,15 @@
 
 					{% else %}
 						<li class="dropdown">
-							<a href="/connexion" class="dropdown-toggle" data-hover="dropdown">Se connecter
+							<a href="/login" class="dropdown-toggle" data-hover="dropdown">Se connecter
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="/inscription" class="dropdown-toggle" data-hover="dropdown">S'inscrire
+							<a href="/register" class="dropdown-toggle" data-hover="dropdown">S'inscrire
 							</a>
 						</li>
 					{% endif %}
-					<li>
-						<a href="#search">
-						<i class="pe-7s-search"></i>
-						</a>
-					</li>
-					<li>
-						<a href="javascript:void(0);" class="side-menu-trigger hidden-xs">
-							<i class="fa fa-bars"></i>
-						</a>
-					</li>
+
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -68,18 +59,9 @@
 		<!-- /.container-fluid -->
 	</nav>
 
-	<div id="search-wrapper">
-		<button type="button" class="close">×</button>
-		<div class="vertical-center text-center">
-			<form>
-				<input type="search" value="" placeholder="Enter Search Term"/>
-				<button type="submit" class="btn btn-primary btn-white">Search</button>
-			</form>
-		</div>
-	</div>
-{% elseif app.request.get('_route') == 'app_trick'%}
+{% elseif app.request.get('_route') == 'app_trick_add' %}
 	<nav
-			class="navbar navbar-default navbar-fixed-top fadeInDown" data-wow-delay="0.5s">
+			class="navbar navbar-default navbar-fixed-top fadeInDown">
 		<!-- Module social network -->
 		<div
 				class="container">
@@ -104,13 +86,13 @@
 					</li>
 					{% if is_granted('ROLE_USER') %}
 						<li class="dropdown">
-							<a href="/nouvelle-figure" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
+							<a href="/trick/add" class="dropdown-toggle" data-hover="dropdown">Ajouter une figure
 							</a>
 						</li>
 					{% endif %}
 					{% if app.user %}
 						<li class="dropdown">
-							<a href="/espace-membre" class="dropdown-toggle" data-hover="dropdown">Bonjour
+							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown">Bonjour
 								{{ app.user.username }}
 							</a>
 						</li>
@@ -121,24 +103,14 @@
 
 					{% else %}
 						<li class="dropdown">
-							<a href="/connexion" class="dropdown-toggle" data-hover="dropdown">Se connecter
+							<a href="/login" class="dropdown-toggle" data-hover="dropdown">Se connecter
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="/inscription" class="dropdown-toggle" data-hover="dropdown">S'inscrire
+							<a href="/register" class="dropdown-toggle" data-hover="dropdown">S'inscrire
 							</a>
 						</li>
 					{% endif %}
-					<li>
-						<a href="#search">
-							<i class="pe-7s-search"></i>
-						</a>
-					</li>
-					<li>
-						<a href="javascript:void(0);" class="side-menu-trigger hidden-xs">
-							<i class="fa fa-bars"></i>
-						</a>
-					</li>
 				</ul>
 			</div>
 			<!-- /.navbar-collapse -->
@@ -146,15 +118,6 @@
 		<!-- /.container-fluid -->
 	</nav>
 
-	<div id="search-wrapper">
-		<button type="button" class="close">×</button>
-		<div class="vertical-center text-center">
-			<form>
-				<input type="search" value="" placeholder="Enter Search Term"/>
-				<button type="submit" class="btn btn-primary btn-white">Search</button>
-			</form>
-		</div>
-	</div>
 {% else %}
 	<nav
 		class="navbar navbar-default fadeInDown" data-wow-delay="0.5s">
@@ -181,13 +144,13 @@
 					</li>
 					{% if is_granted('ROLE_USER') %}
 						<li class="dropdown">
-							<a href="/nouvelle-figure" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Ajouter une figure
+							<a href="/trick/add" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Ajouter une figure
 							</a>
 						</li>
 					{% endif %}
 					{% if app.user %}
 						<li class="dropdown">
-							<a href="/espace-membre" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Espace membre
+							<a href="/member_area" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Espace membre
 							</a>
 						</li>
 						<li class="dropdown">
@@ -197,11 +160,11 @@
 
 					{% else %}
 						<li class="dropdown">
-							<a href="/connexion" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Se connecter
+							<a href="/login" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>Se connecter
 							</a>
 						</li>
 						<li class="dropdown">
-							<a href="/inscription" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>S'inscrire
+							<a href="/register" class="dropdown-toggle" data-hover="dropdown" style='color: black;'>S'inscrire
 							</a>
 						</li>
 					{% endif %}

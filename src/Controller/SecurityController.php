@@ -6,15 +6,13 @@ use App\Entity\User;
 use App\Entity\Token;
 use App\Form\RegisterType;
 use App\Service\AppMailer;
-use App\Service\TokenManager;
 use App\Form\ForgotPasswordType;
 use App\Form\ResetPasswordType;
 use App\Repository\UserRepository;
-use Doctrine\ORM\EntityManagerInterface;
+use App\Service\Manager;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\Security\Http\Authentication\AuthenticationUtils;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -23,19 +21,17 @@ class SecurityController extends AbstractController
 {
 
     /**
-     * @Route("/inscription", name="app_register")
+     * @Route("/register", name="app_register")
      */
-    public function register(Request $request, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, AppMailer $mailer): Response
+    public function register(Request $request, Manager $manager, UserPasswordEncoderInterface $encoder, AppMailer $mailer): Response
     {
         $user = new User();
         $form = $this->createForm(RegisterType::class, $user);
         $form->handleRequest($request);
         if ($form->isSubmitted() && $form->isValid()) {
             $hash = $encoder->encodePassword($user, $user->getPassword());
-            $user->setPassword($hash);
-            $user->setToken(new Token());
-            $manager->persist($user);
-            $manager->flush();
+            $user->setPassword($hash)->setToken(new Token());
+            $manager->update($user);
             $this->addFlash('notice', 'Inscription effectuée, veuillez vérifier votre boite email !');
             $mailer->sendRegisterMail($user);
         }
@@ -45,7 +41,7 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/connexion", name="app_login")
+     * @Route("/login", name="app_login")
      */
     public function login(AuthenticationUtils $authenticationUtils): Response
     {
@@ -70,17 +66,16 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/confirmation-compte/{content}", name="app_confirm_token")
+     * @Route("/confirm-account/{content}", name="app_confirm_token")
      */
-    public function confirmAccount(Token $token, EntityManagerInterface $manager, AppMailer $mailer): Response
+    public function confirmAccount(Token $token, Manager $manager, AppMailer $mailer): Response
     {
         if ($user = $token->getUser()) {
             $user->setRoles(['ROLE_USER']);
             $user->setToken(null);
         }
-        $manager->remove($token);
-        $manager->persist($user);
-        $manager->flush();
+        $manager->delete($token);
+        $manager->update($user);
 
         $mailer->sendConfirmAccountMail($user);
 
@@ -89,9 +84,9 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/mdp-oublie", name="app_forgot_password")
+     * @Route("/forgot-password", name="app_forgot_password")
      */
-    public function ForgotPassword(Request $request, EntityManagerInterface $manager, UserRepository $userRepository, AppMailer $mailer): Response
+    public function ForgotPassword(Request $request,Manager $manager, UserRepository $userRepository, AppMailer $mailer): Response
     {
         $form = $this->createForm(ForgotPasswordType::class);
         $form->handleRequest($request);
@@ -100,8 +95,7 @@ class SecurityController extends AbstractController
             if ($user = $userRepository->findOneBy(["email" => $form->getData()['email']])) {
                 if ($user->getToken() === null) {
                     $user->setToken(new Token());
-                    $manager->persist($user);
-                    $manager->flush();
+                    $manager->update($user);
                     $mailer->sendResetPassMail($user);
                     $this->addFlash('notice', 'Réinitialisation envoyée : <br>Merci de vérifier votre adresse mail');
                 } else {
@@ -118,19 +112,17 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/mdp-reinitialise/{content}", name="app_reset_password")
+     * @Route("/reset-password/{content}", name="app_reset_password")
      */
-    public function resetPassword(Token $token, EntityManagerInterface $manager, UserPasswordEncoderInterface $encoder, Request $request)
+    public function resetPassword(Token $token, Manager $manager, UserPasswordEncoderInterface $encoder, Request $request)
     {
         $form = $this->createForm(ResetPasswordType::class);
         $form->handleRequest($request);
-        // TODO voir pour refactoring
         if ($form->isSubmitted() && $form->isValid()) {
             $user = $token->getUser();
             $user->setToken(null)->setPassword($encoder->encodePassword($user, $form->getData()['password']));
-            $manager->remove($token);
-            $manager->persist($user);
-            $manager->flush();
+            $manager->delete($token);
+            $manager->update($user);
             $this->addFlash('notice', 'Mot de passe modifié');
             return $this->redirectToRoute('app_login');
         }
@@ -140,16 +132,16 @@ class SecurityController extends AbstractController
     }
 
     /**
-     * @Route("/suprime-compte", name="app_delete_account")
+     * @Route("/deleteAccount", name="app_delete_account")
      */
-    public function deleteAccount(UserInterface $user, EntityManagerInterface $manager, AppMailer $mailer): Response
+    public function deleteAccount(Manager $manager, AppMailer $mailer): Response
     {
-        if ($user) {
+        if ($user = $this->getUser()) {
             $mailer->sendDeleteAccountMail($user);
-            $manager->remove($user);
-            $manager->flush();
+            $manager->delete($user);
 
-            return $this->redirectToRoute('app_home');
+            $this->container->get('security.token_storage')->setToken(null);
+            return $this->redirectToRoute('app_logout');
         } else {
             return $this->redirectToRoute('app_member_area');
         }

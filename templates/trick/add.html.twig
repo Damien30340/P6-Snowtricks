@@ -1,0 +1,39 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une figure{% endblock %}
+
+{% block javascripts %}
+    <script src="{{ asset('assets/js/apAddTrick.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+<section class="dark-wrapper opaqued parallax" data-parallax="scroll" data-image-src="" data-speed="0.7">
+    <div class="section-inner text-center">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-8 col-sm-offset-2 mt30 wow">
+                    <h2 class="section-heading"></h2>
+                    <div class="item-metas text-muted mb30 white">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section>
+    <div class="section-inner">
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-12">
+                     {{ form_start(form) }}
+                     {{ include("trick/_form.html.twig", {form: form}) }}
+                     {{ form_end(form, {'render_rest': false}) }}
+                </div>
+            </div>
+            <!--/.media-->
+
+        </div>
+    </div>
+</section>
+{% endblock %}
