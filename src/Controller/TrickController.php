@@ -2,7 +2,9 @@
 
 namespace App\Controller;
 
+use App\Entity\Comment;
 use App\Entity\Trick;
+use App\Form\CommentFormType;
 use App\Form\TrickFormType;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -24,17 +26,32 @@ class TrickController extends AbstractController
      * @param Trick $trick
      * @return Response
      */
-    public function trickShow(Trick $trick): Response
+    public function trickShow(Trick $trick, Request $request, EntityManagerInterface $em): Response
     {
+        $comment = new Comment();
+        $commentForm = $this->createForm(CommentFormType::class, $comment)->handleRequest($request);
+
+        if($commentForm->isSubmitted() && $commentForm->isValid())
+        {
+            $comment->setAuthor($this->getUser())
+                    ->setTrick($trick);
+            $em->persist($comment);
+            $em->flush();
+
+            return $this->redirectToRoute('app_show_trick', ['id' => $trick->getId()]);
+        }
+
         $picture = $trick->getDefaultPicture();
 
         return $this->render('trick/trick.html.twig', [
             'trick' => $trick,
             'picture' => $picture,
+            'commentForm' => $commentForm->createView()
         ]);
     }
 
     /**
+     * @IsGranted("ROLE_USER")
      * @Route("/add", name="app_trick_add")
      * @param Request $request
      * @param EntityManagerInterface $em
@@ -42,7 +59,7 @@ class TrickController extends AbstractController
      */
     public function trickAdd(Request $request, EntityManagerInterface $em): Response
     {
-        $trick = new trick();
+        $trick = new Trick();
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
 
 
@@ -70,7 +87,9 @@ class TrickController extends AbstractController
      */
     public function trickEdit(Request $request, EntityManagerInterface $em, Trick $trick): Response
     {
+        dump($trick->getPictures());
         $form = $this->createForm(TrickFormType::class, $trick)->handleRequest($request);
+        dump($trick);
 
         if($form->isSubmitted() && $form->isValid()){
             $trick = $form->getData();
@@ -81,7 +100,8 @@ class TrickController extends AbstractController
         }
         return $this->render('trick/edit.html.twig', [
             'form' => $form->createView(),
-            'picture' => $trick->getDefaultPicture()
+            'picture' => $trick->getDefaultPicture(),
+            'trick' => $trick
         ]);
     }
 

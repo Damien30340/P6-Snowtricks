@@ -28,12 +28,15 @@ class ApiController extends AbstractController
         $tricks = $trickRepository->getLoadMoreTrick($page);
         $pictures = [];
         $categories = [];
+        $comments = [];
 
         for ($i = 0; $i < count($tricks); $i++){
+            $comment = strval(count($tricks[$i]->getComments()));
             $category = $tricks[$i]->getCategory()->getName();
             $picture = $tricks[$i]->getDefaultPicture();
             array_push($categories, $category);
             array_push($pictures, $picture);
+            array_push($comments, $comment);
         }
         $totalPage = 10;
 
@@ -42,7 +45,8 @@ class ApiController extends AbstractController
             'totalPage' => $totalPage,
             'categories' => $categories,
             'pictures' => $pictures,
-            'tricks' => $tricks
+            'tricks' => $tricks,
+            'comments' => $comments
         ], 200, [], [
             'groups' => ['loadMore']
         ]);
