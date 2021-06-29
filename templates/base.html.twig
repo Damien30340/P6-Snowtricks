@@ -15,19 +15,17 @@
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="description" content="">
         <meta name="author" content="">
-        <link rel="shortcut icon" href="{{ asset('assets/img/ico/favicon.ico') }}">
-        <link rel="apple-touch-icon" sizes="144x144" href="{{ asset('assets/img/ico/apple-touch-icon-144x144.png') }}">
-        <link rel="apple-touch-icon" sizes="114x114" href="{{ asset('assets/img/ico/apple-touch-icon-114x114.png') }}">
-        <link rel="apple-touch-icon" sizes="72x72" href="{{ asset('assets/img/ico/apple-touch-icon-72x72.png') }}">
-        <link rel="apple-touch-icon" href="{{ asset('assets/img/ico/apple-touch-icon-57x57.png') }}">
+        <link rel="stylesheet" href="{{ asset('assets/css/bootstrap.css') }}">
+        <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
         <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Open+Sans&display=swap" rel="stylesheet">
 
         <title>Snowtricks</title>
 
         <!-- Bootstrap Core CSS -->
         <link href="{{ asset('assets/css/bootstrap.min.css') }}" rel="stylesheet">
-        <link href="{{ asset('assets/css/animate.css') }}" rel="stylesheet">
-        <link href="{{ asset('assets/css/plugins.css') }}" rel="stylesheet">
 
         <!-- Custom CSS -->
         <link href="{{ asset('assets/css/style.css') }}" rel="stylesheet">
@@ -41,45 +39,27 @@
     {% block javascripts %}
         {# {{ encore_entry_script_tags('app') }} #}
     {% endblock %}
-    <script src="{{ asset('assets/js/plugin.js') }}"></script>
+
 </head>
 
 
-<body id="page-top" class="index">
+<body>
 
-<div class="master-wrapper">
     {% include "nav.html.twig" %}
-    {% if app.request.get('_route') == 'app_home' %}
-        {% include "header.html.twig" %}
-    {% endif %}
+    {% include "header.html.twig" %}
 
-
-    <div class="preloader">
-        <div class="preloader-img">
-            <span class="loading-animation animate-flicker"><img src="{{ asset('assets/img/loading.GIF') }}"
-                                                                 alt="loading"/></span>
-        </div>
-    </div>
-
+{#    <div class="preloader">#}
+{#        <div class="preloader-img">#}
+{#            <span class="loading-animation animate-flicker"><img src="{{ asset('assets/img/loading.GIF') }}"#}
+{#                                                                 alt="loading"/></span>#}
+{#        </div>#}
+{#    </div>#}
 
     {% block body %}{% endblock %}
-
     {% include "footer.html.twig" %}
-</div>
-
 
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
+<script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
 
-{#<script type="text/javascript">#}
-{#    $(document).ready(function () {#}
-{#        'use strict';#}
-{#        jQuery('#headerwrap').backstretch([#}
-{#            "{{ asset('assets/img/bg/bg2.jpg') }}", "{{ asset('assets/img/bg/bg3.jpg') }}", "{{ asset('assets/img/bg/bg4.jpg') }}",#}
-{#        ], {#}
-{#            duration: 7000,#}
-{#            fade: 500#}
-{#        });#}
-{#    });#}
-{#</script>#}
 </body>
 </html>

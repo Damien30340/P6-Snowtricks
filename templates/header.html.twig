@@ -1,11 +1,63 @@
-<!-- Header -->
-<header id="headerwrap" class="backstretched fullheight" style="background-image: url('assets/img/bg/bg2.jpg'); background-size:100% auto; background-repeat: no-repeat;">
-	<div class="container vertical-center">
-		<div class="intro-text vertical-center text-left smoothie">
-			<div class="intro-heading wow fadeIn heading-font" data-wow-delay="0.2s">Snowtricks</div>
-			<div class="intro-sub-heading wow fadeIn secondary-font" data-wow-delay="0.4s">Le site communautaire de snowboard,
-				<span class="rotate">partagez avec la communauté, ajouter des figures</span>
-			</div>
-		</div>
-	</div>
-</header>
+{% if app.request.get('_route') == 'app_home' %}
+    <!-- START HEADER HOME -->
+    <header>
+        <div class="overlay"></div>
+        <video playsinline="playsinline" autoplay="autoplay" muted="muted" loop="loop">
+            <source src="{{ asset('assets/img/bg/People_Sking.mp4') }}" type="video/mp4">
+        </video>
+        <div class="container h-100">
+            <div class="d-flex h-100 text-center align-items-center">
+                <div class="w-100 text-white">
+                    <h1 class="display-3"><strong>SNOWTRICKS</strong></h1>
+                    <p class="lead mb-0">Site communautaire pour les passionnés de snowboard !</p>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- END HEADER HOME -->
+{% elseif app.request.get('_route') == 'app_show_trick' or app.request.get('_route') == 'app_trick_edit' %}
+    <!-- START HEADER TRICK -->
+    <header style="background-color: #5c636a; height: 70vh;">
+        <div class="container-fluid" style="background: url('{{ picture }}') no-repeat center center; background-size: cover;">
+            <div class="row justify-content-center align-items-center text-center" style="height: 70vh;">
+                <div class="col-6 rounded section-heading">
+                    <h2>{{ trick.name }}</h2>
+                    <div class="item-metas text-muted mb30 white">
+                            <span class="meta-item"><i
+                                        class="pe-icon pe-7s-ticket"></i> Catégorie <span>{{ trick.category.name }}</span></span>
+                        <span class="meta-item"><i
+                                    class="pe-icon pe-7s-comment"></i> Commentaires <span>{{ trick.comments.count }}</span></span>
+                        <span class="meta-item post-date"><i
+                                    class="pe-icon pe-7s-clock"></i> Posté le <span>{{ trick.createdAt|date("d/m/Y") }}</span></span>
+                        {% if is_granted('ROLE_USER') %}
+                        <li style="list-style-type: none"><a
+                                    href="{{ path('app_trick_edit', {'id': trick.id}) }}"><i
+                                        class="bi bi-pen" style="color: black;"></i><span> Editer</span></a></li>
+                        <li style="list-style-type: none"><a
+                                    href="{{ path('app_trick_delete', {'id': trick.id}) }}"><i
+                                        class="bi bi-trash" style="color: black;"></i><span> Supprimer</span></a></li>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <!-- END HEADER TRICK -->
+{% else %}
+    <div class="container-fluid mt-5">
+        <div class="row">
+            <div class="col"></div>
+        </div>
+    </div>
+{% endif %}
+<div class="row justify-content-center">
+    <div class="col-sm-8 blog-item mb60">
+        {% for message in app.flashes('success') %}
+        <div class="alert alert-success mt-5" role="alert">
+            {{ message }}
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+

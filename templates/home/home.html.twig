@@ -1,0 +1,95 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Home
+{% endblock %}
+    {% block javascripts %}
+        <script src="{{ asset('assets/js/apiTrick.js') }}"></script>
+    {% endblock %}
+{% block body %}
+    <!-- START CONTENT -->
+    <section>
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-sm">
+                    <h2 class="post-sub-title mx-4 my-5"><strong>Toutes les figures</strong></h2>
+                </div>
+
+            </div>
+            <div class="row text-center trickListDefault">
+{#                <div class="tricklistDefault">#}
+                    {% for trick in tricks %}
+                        <div class="col-sm-12 col-md-6 col-lg-4">
+                            <div class="img-trick">
+                                <a href="/trick/show/{{ trick.id }}" class="">
+                                    <img src="{{ trick.defaultPicture }}">
+                                </a>
+                            </div>
+                            <div class="flex-column text-start mx-4">
+                                <h2 class="post-title px-1">{{ trick.name }}
+                                    {% if is_granted('ROLE_USER') %}
+                                    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}"><i class="bi bi-pen"
+                                                                                                style="color: black;"></i></a>
+                                    <a href="{{ path('app_trick_delete', {'id': trick.id}) }}"><i class="bi bi-trash"
+                                                                                                  style="color: black;"></i></a>
+                                    {% endif %}
+                                </h2>
+                                <span class="meta-item px-1">
+                            <i class="bi bi-tags-fill"></i>
+                            Catégorie
+                                <span class="post-category">{{ trick.category.name }}</span>
+                            </span>
+                                <br>
+                                <span class="meta-item px-1">
+                            <i class="bi bi-chat-right-text-fill"></i>
+                            Commentaire
+                                <span class="post-comment">{{ trick.comments.count }}</span>
+                            </span>
+                                <p class="post-content px-1">{{ trick.content }}</p>
+                                <p class="px-1"><a href="/trick/show/{{ trick.id }}" class="btn btn-primary">Lire
+                                        plus</a></p>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+{#            </div>#}
+        </div>
+    </section>
+    <template id="trickList">
+                <div class="col-sm-12 col-md-6 col-lg-4 ">
+                    <div class="img-trick">
+                        <a href="#" class="">
+                            <img src="">
+                        </a>
+                    </div>
+                    <div class="flex-column text-start mx-4">
+                        <h2 class="post-title px-1">
+                            <a href=""><i class="bi bi-pen" style="color: black;"></i></a>
+                            <a href=""><i class="bi bi-trash" style="color: black;"></i></a>
+                        </h2>
+                        <span class="meta-item px-1">
+                            <i class="bi bi-tags-fill"></i>
+                            Catégorie
+                                <span class="post-category"></span>
+                            </span>
+                        <br>
+                        <span class="meta-item px-1">
+                            <i class="bi bi-chat-right-text-fill"></i>
+                            Commentaire
+                                <span class="post-comment"></span>
+                            </span>
+                        <p class="post-content px-1"></p>
+                        <p class="px-1"><a href="" class="btn btn-primary">Lire
+                                plus</a></p>
+                    </div>
+                </div>
+    </template>
+
+    <div class="row">
+        <p class="text-center">
+            <a class="btn btn-primary mt30 ajaxButton" href="#">Charger plus</a>
+            <img id="loadMoreGif" src="{{ asset('assets/img/loading.GIF') }}" alt="loading"
+                 style="display: none;">
+        </p>
+    </div>
+{% endblock %}
+

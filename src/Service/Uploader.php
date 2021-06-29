@@ -45,7 +45,12 @@ class Uploader
     }
 
     public function deleteFile(Picture $picture){
+        try {
             unlink(self::PICTURE_DIR_FULL . $picture->getFileName());
+        } catch (\Exception $e){
+            return;
+        }
+
     }
 
 
