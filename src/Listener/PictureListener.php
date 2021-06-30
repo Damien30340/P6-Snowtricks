@@ -5,6 +5,7 @@ namespace App\Listener;
 
 use App\Entity\Picture;
 use App\Service\Uploader;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 
 class PictureListener
@@ -19,13 +20,12 @@ class PictureListener
 
     public function prePersist(Picture $picture): void
     {
-
         try {
-            foreach ($picture->getTrick()->getPictures() as $pic) {
-                $pic->setFileName($this->uploader->upload($pic->getFile(), Uploader::PICTURE_TRICK_DIR));
+            if ($picture->getFile() instanceof UploadedFile) {
+                $picture->setFileName($this->uploader->upload($picture->getFile(), Uploader::PICTURE_TRICK_DIR));
             }
         } catch (\Exception $e) {
-            echo 'Impossible d\'uploader le fichier : ' . $e;
+            return;
         }
     }
 

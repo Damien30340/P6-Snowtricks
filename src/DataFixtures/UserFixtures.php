@@ -3,7 +3,6 @@
 namespace App\DataFixtures;
 
 use App\Entity\User;
-use App\Entity\Token;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
@@ -43,6 +42,8 @@ class UserFixtures extends Fixture
                 ->setAvatar('img/profil/avatar' . $index);
             $user->setPassword($this->encoder->encodePassword($user, '15071990aA@'));
             $manager->persist($user);
+
+            $this->addReference("user_" . $index, $user);
         }
         $manager->flush();
     }

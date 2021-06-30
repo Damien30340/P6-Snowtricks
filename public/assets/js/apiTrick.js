@@ -6,8 +6,8 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
     const button = document.querySelector('.ajaxButton')
     const gif = document.querySelector('#loadMoreGif')
-    trickListDefault = document.querySelector(".tricklistDefault")
-    template = document.querySelector("#tricklist")
+    trickListDefault = document.querySelector(".trickListDefault")
+    template = document.querySelector("#trickList")
 
 
     let currentPage = 1
@@ -19,23 +19,24 @@ document.addEventListener("DOMContentLoaded", function (e) {
         currentPage += 1
         const response = await fetch(`/api/tricks?page=${currentPage}`)
         data = await response.json()
-
+        console.log(data);
         const tricks = data.tricks
         const picture = data.pictures
         const category = data.categories
+        const comment = data.comments
+
 
         if (tricks.length > 0) {
             for (let i = 0; i < tricks.length; i++) {
                 let clone = document.importNode(template.content, true)
-                clone.querySelector(".post-title").innerHTML = `${tricks[i].name}<a href="trick/edit/${tricks[i].id}"><i class="bi bi-pen"></i></a>
-                                            <a href="trick/delete/${tricks[i].id}"><i class="bi bi-trash"></i></a>`
+                clone.querySelector(".post-title").innerHTML = `${tricks[i].name} <a href="trick/edit/${tricks[i].id}"><i class="bi bi-pen" style="color: black;"></i></a>
+                                            <a href="trick/delete/${tricks[i].id}"><i class="bi bi-trash" style="color: black;"></i></a>`
                 clone.querySelector(".post-content").innerHTML = `${tricks[i].content.substr(0, 50)}`
                 let a = clone.querySelectorAll("a")
-                console.log(a);
-                a[0].outerHTML = `<a class="smoothie btn btn-primary page-scroll" title="view article" href="trick/show/${tricks[i].id}">Voir</a>`
-                a[3].outerHTML = `<a class="btn btn-primary mt30" href="trick/show/${tricks[i].id}">Lire plus</a>`
-                clone.querySelector("img").outerHTML = `<img src="${picture[i]}" class="img-responsive smoothie" alt="title">`
+                a[0].outerHTML = `<a href="trick/show/${tricks[i].id}"><img src="${picture[i]}"></a>`
+                a[3].outerHTML = `<a href="trick/show/${tricks[i].id}" class="btn btn-primary">Lire plus</a>`
                 clone.querySelector(".post-category").innerHTML = `${category[i]}`
+                clone.querySelector(".post-comment").innerHTML = `${comment[i]}`
 
                 trickListDefault.appendChild(clone)
             }

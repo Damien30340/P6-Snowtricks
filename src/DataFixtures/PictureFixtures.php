@@ -33,10 +33,10 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
     public function load(ObjectManager $manager)
     {
         foreach (self::$img as $index => $data) {
-            $Picture = (new Picture())
+            $picture = (new Picture())
                 ->setFileName($data, Picture::FIXTURES_DIR)
                 ->setTrick($this->getReference('trick_' . $index));
-            $manager->persist($Picture);
+            $manager->persist($picture);
         }
         $manager->flush();
     }
