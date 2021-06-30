@@ -2,14 +2,14 @@
 Develop SnowTricks Community Site (SYMFONY) from A to Z
 
 ## Config
-1. PHP 7.4.9
-2. SYMFONY 5.2
-3. DOCTRINE 2.8
-4. COMPOSER 2.0.11
-5. PHPUNIT 8.5.17
-6. WAMP 3.2.3
-7. APACHE 2.4.46
-8. MYSQL 5.7.31
+- PHP 7.4.9
+- SYMFONY 5.2
+- DOCTRINE 2.8
+- COMPOSER 2.0.11
+- PHPUNIT 8.5.17
+- WAMP 3.2.3
+  - APACHE 2.4.46
+  - MYSQL 5.7.31
 
 ## Install
 * Step 1: Move to the installation folder, make a git clone "https://github.com/Damien30340/P6-Snowtricks.git"
