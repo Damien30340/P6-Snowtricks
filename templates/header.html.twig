@@ -18,7 +18,8 @@
 {% elseif app.request.get('_route') == 'app_show_trick' or app.request.get('_route') == 'app_trick_edit' %}
     <!-- START HEADER TRICK -->
     <header style="background-color: #5c636a; height: 70vh;">
-        <div class="container-fluid" style="background: url('{{ picture }}') no-repeat center center; background-size: cover;">
+        <div class="container-fluid"
+             style="background: url('{{ picture }}') no-repeat center center; background-size: cover;">
             <div class="row justify-content-center align-items-center text-center" style="height: 70vh;">
                 <div class="col-6 rounded section-heading">
                     <h2>{{ trick.name }}</h2>
@@ -30,12 +31,25 @@
                         <span class="meta-item post-date"><i
                                     class="pe-icon pe-7s-clock"></i> Posté le <span>{{ trick.createdAt|date("d/m/Y") }}</span></span>
                         {% if is_granted('ROLE_USER') %}
-                        <li style="list-style-type: none"><a
-                                    href="{{ path('app_trick_edit', {'id': trick.id}) }}"><i
-                                        class="bi bi-pen" style="color: black;"></i><span> Editer</span></a></li>
-                        <li style="list-style-type: none"><a
-                                    href="{{ path('app_trick_delete', {'id': trick.id}) }}"><i
-                                        class="bi bi-trash" style="color: black;"></i><span> Supprimer</span></a></li>
+                            <ul style="list-style-type: none;">
+                                <li>
+                                    <button class="btn btn-sm btn-link"
+                                            style="text-decoration: none; color: black;"
+                                            data-link="{{ path('app_trick_edit', {'id': trick.id}) }}"
+                                            id="button-edit-trick">
+                                        <i class="bi bi-pen"></i>
+                                        Modifier
+                                    </button>
+                                </li>
+                                <li>
+                                    <button class="btn btn-sm btn-danger"
+                                            data-link="{{ path('app_trick_delete', {'id': trick.id}) }}"
+                                            id="button-remove-trick">
+                                        <i class="bi bi-trash"></i>
+                                        Supprimer
+                                    </button>
+                                </li>
+                            </ul>
                         {% endif %}
                     </div>
                 </div>

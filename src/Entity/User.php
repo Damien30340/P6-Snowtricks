@@ -75,7 +75,7 @@ class User implements UserInterface
     private $token;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, cascade={"persist", "remove"}, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Comment::class, orphanRemoval=true, cascade={"persist", "remove"}, mappedBy="author")
      */
     private $comments;
 

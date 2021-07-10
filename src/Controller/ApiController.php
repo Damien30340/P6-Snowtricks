@@ -38,11 +38,20 @@ class ApiController extends AbstractController
             array_push($pictures, $picture);
             array_push($comments, $comment);
         }
-        $totalPage = 10;
+
+        $totalTricks = $trickRepository->getTotalTricks() - 6;
+        $totalPages = ceil($totalTricks / 6 + 1);
+
+        if($this->getUser() === null){
+            $user = false;
+        } else {
+            $user = true;
+        }
 
         return $this->json([
+            'connected' => $user,
             'currentPage' => $page,
-            'totalPage' => $totalPage,
+            'totalPages' => $totalPages,
             'categories' => $categories,
             'pictures' => $pictures,
             'tricks' => $tricks,

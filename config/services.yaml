@@ -40,5 +40,9 @@ services:
 
     App\Listener\PictureListener:
         tags:
-              - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Picture', method: 'prePersist'}
-              - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\Picture', method: 'preRemove'}
+            - { name: 'doctrine.orm.entity_listener', event: 'prePersist', entity: 'App\Entity\Picture', method: 'prePersist'}
+            - { name: 'doctrine.orm.entity_listener', event: 'preRemove', entity: 'App\Entity\Picture', method: 'preRemove'}
+    App\Listener\TrickListener:
+        tags:
+            - { name: 'doctrine.orm.entity_listener', event: 'preFlush', entity: 'App\Entity\Trick', method: 'preFlush'}
+            - { name: 'doctrine.orm.entity_listener', event: 'postLoad', entity: 'App\Entity\Trick', method: 'postLoad'}

@@ -6,6 +6,7 @@ use App\Entity\Comment;
 use App\Entity\Trick;
 use App\Form\CommentFormType;
 use App\Form\TrickFormType;
+use App\Repository\CommentRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
@@ -22,11 +23,11 @@ class TrickController extends AbstractController
 {
 
     /**
-     * @Route("/show/{id}", name="app_show_trick")
+     * @Route("/show/{id}/{slug}", name="app_show_trick")
      * @param Trick $trick
      * @return Response
      */
-    public function trickShow(Trick $trick, Request $request, EntityManagerInterface $em): Response
+    public function trickShow(Trick $trick, CommentRepository $repo, Request $request, EntityManagerInterface $em): Response
     {
         $comment = new Comment();
         $commentForm = $this->createForm(CommentFormType::class, $comment)->handleRequest($request);
@@ -40,11 +41,19 @@ class TrickController extends AbstractController
 
             return $this->redirectToRoute('app_show_trick', ['id' => $trick->getId()]);
         }
-
         $picture = $trick->getDefaultPicture();
+
+        $page = (int)$request->query->get("page", 1);
+        $limit = 10;
+        $totalComments = count($trick->getComments());
+        $comments = $repo->getPaginatedComments($page, $limit, $trick);
 
         return $this->render('trick/trick.html.twig', [
             'trick' => $trick,
+            'comments' => $comments,
+            'page' => $page,
+            'limit' => $limit,
+            'totalComments' => $totalComments,
             'picture' => $picture,
             'commentForm' => $commentForm->createView()
         ]);
@@ -70,7 +79,7 @@ class TrickController extends AbstractController
             $em->persist($trick);
             $em->flush();
             $this->addFlash("success", 'Figure créée');
-            return $this->redirectToRoute("app_show_trick",['id' => $trick->getId()]);
+            return $this->redirectToRoute("app_show_trick",['id' => $trick->getId(), 'slug' => $trick->getSlug()]);
         }
         return $this->render('trick/add.html.twig', [
             'form' => $form->createView()
@@ -96,7 +105,7 @@ class TrickController extends AbstractController
             $em->persist($trick);
             $em->flush();
             $this->addFlash("success", 'Figure modifiée');
-            return $this->redirectToRoute("app_show_trick", ['id' => $trick->getId()]);
+            return $this->redirectToRoute("app_show_trick", ['id' => $trick->getId(), 'slug' => $trick->getSlug()]);
         }
         return $this->render('trick/edit.html.twig', [
             'form' => $form->createView(),

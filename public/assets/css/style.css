@@ -2,6 +2,9 @@
 body {
     font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
+ul{
+    list-style-type: none;
+}
 /********* END BODY *************/
 
 /********* NAV BAR *************/
@@ -96,11 +99,6 @@ header .overlay {
     background-color: transparent;
     padding: 15px 0px;
     letter-spacing: 1px;
-    -webkit-transition: all .5s ease-in-out;
-    -moz-transition: all .5s ease-in-out;
-    -o-transition: all .5s ease-in-out;
-    -ms-transition: all .5s ease-in-out;
-    transition: all .5s ease-in-out;
     border: none;
     border-bottom: 3px solid;
     font-size: 13px;
@@ -108,11 +106,9 @@ header .overlay {
 
 .btn:hover, .btn:focus {
     color: #333333;
-    text-decoration: none;
     background-color: transparent;
     opacity: 65%;
     border: none;
-    border-bottom: 3px solid black;
 }
 
 .btn-danger:hover, .btn-danger:focus {

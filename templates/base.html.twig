@@ -45,18 +45,19 @@
 
 <body>
 
-    {% include "nav.html.twig" %}
-    {% include "header.html.twig" %}
+{% include "nav.html.twig" %}
+{% include "header.html.twig" %}
+{% include "modal.html.twig" %}
 
-{#    <div class="preloader">#}
-{#        <div class="preloader-img">#}
-{#            <span class="loading-animation animate-flicker"><img src="{{ asset('assets/img/loading.GIF') }}"#}
-{#                                                                 alt="loading"/></span>#}
-{#        </div>#}
-{#    </div>#}
+{# <div class="preloader"> #}
+{# <div class="preloader-img"> #}
+{# <span class="loading-animation animate-flicker"><img src="{{ asset('assets/img/loading.GIF') }}" #}
+{# alt="loading"/></span> #}
+{# </div> #}
+{# </div> #}
 
-    {% block body %}{% endblock %}
-    {% include "footer.html.twig" %}
+{% block body %}{% endblock %}
+{% include "footer.html.twig" %}
 
 <script src="{{ asset('assets/js/bootstrap.min.js') }}"></script>
 <script src="{{ asset('assets/js/bootstrap.bundle.js') }}"></script>
