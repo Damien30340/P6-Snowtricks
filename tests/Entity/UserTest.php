@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\User;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Validator\ConstraintViolation;
 
 class UserTest extends KernelTestCase
 {
@@ -34,6 +33,9 @@ class UserTest extends KernelTestCase
         $this->assertHasErrors($this->getEntity(), 0);
     }
 
+    /**
+     * Test Length
+     */
     public function testLengthUsername()
     {
         $this->assertHasErrors($this->getEntity()->setUsername('usernameUsernameusere'), 1);

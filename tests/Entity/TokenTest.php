@@ -4,7 +4,6 @@ namespace App\Tests\Entity;
 
 use App\Entity\Token;
 use Symfony\Bundle\FrameworkBundle\Test\KernelTestCase;
-use Symfony\Component\Validator\ConstraintViolation;
 
 class TokenTest extends KernelTestCase
 {
@@ -14,10 +13,10 @@ class TokenTest extends KernelTestCase
         return new Token();
     }
 
-    public function assertHasErrors(Token $user, int $number = 0)
+    public function assertHasErrors(Token $token, int $number = 0)
     {
         self::bootKernel();
-        $errors = self::$container->get('validator')->validate($user);
+        $errors = self::$container->get('validator')->validate($token);
         $messages = [];
         foreach ($errors as $error) {
             $messages[] = $error->getPropertyPath() . ' => ' . $error->getMessage();
@@ -30,8 +29,4 @@ class TokenTest extends KernelTestCase
         $this->assertHasErrors($this->getEntity(), 0);
     }
 
-    /**
-     * Test UniqueId
-     *
-     */
 }

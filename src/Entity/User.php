@@ -21,7 +21,7 @@ class User implements UserInterface
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=180, unique=true)
@@ -32,12 +32,12 @@ class User implements UserInterface
      * maxMessage = "Votre pseudo est trop long !"
      * )
      */
-    private $username;
+    private ?string $username;
 
     /**
      * @ORM\Column(type="json")
      */
-    private $roles = [];
+    private ?array $roles = [];
 
 
     /**
@@ -48,13 +48,13 @@ class User implements UserInterface
      * message="Votre mot de passe ne répond pas aux éxigences de sécurités")
      * @Assert\NotBlank()
      */
-    private $password;
-    private $oldPassword;
+    private ?string $password;
+    private ?string $oldPassword;
     /**
      * @Assert\EqualTo(propertyPath="password", message="Les mots de passes doivent être identiques")
      * @Assert\NotBlank()
      */
-    private $confirmPassword;
+    private ?string $confirmPassword;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -62,20 +62,21 @@ class User implements UserInterface
      *     message = "L'adresse email '{{ value }}' n'est pas un email valide."
      * )
      */
-    private $email;
+    private ?string $email;
 
     /**
      * @ORM\Column(type="string", length=255, nullable=true)
      */
-    private $avatar;
+    private ?string $avatar;
 
     /**
      * @ORM\OneToOne(targetEntity=Token::class, cascade={"persist", "remove"}, inversedBy="user")
      */
-    private $token;
+    private ?Token $token;
 
     /**
      * @ORM\OneToMany(targetEntity=Comment::class, orphanRemoval=true, cascade={"persist", "remove"}, mappedBy="author")
+     * @var Collection<int, Comment>
      */
     private $comments;
 

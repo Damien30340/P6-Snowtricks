@@ -56,9 +56,9 @@
                 {% for comment in comments %}
                     <div class="row justify-content-center">
                         <div class="col-md-8">
-                            <img class="avatar comment-avatar" src="" alt="">
                             <div class="well">
                                 <div class="media-heading">
+                                   <img class="avatar-img" src="{{ comment.author.avatar }}" alt="avatar" style="height: 30px;">
                                     <span class="heading-font"><b>{{ comment.author.username }}</b></span>&nbsp;
                                     <small
                                             class="secondary-font">le {{ comment.createdAt|date('d/m/Y à h:m') }}</small>

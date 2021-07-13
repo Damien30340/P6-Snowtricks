@@ -6,13 +6,14 @@ use App\Repository\TrickRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Serializer\Annotation\Groups;
-use Symfony\Component\String\Slugger\SluggerInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass=TrickRepository::class)
  * @ORM\Table(name="trick", indexes={@ORM\Index(columns={"name", "content"}, flags={"fulltext"})})
+ * @UniqueEntity("name")
  */
 class Trick
 {
@@ -22,7 +23,7 @@ class Trick
      * @ORM\Column(type="integer")
      * @Groups({"loadMore"})
      */
-    private $id;
+    private ?int $id;
 
     /**
      * @ORM\Column(type="string", length=255)
@@ -35,7 +36,7 @@ class Trick
      *      maxMessage = "Le titre ne doit pas dépasser les {{ limit }} caractères"
      * )
      */
-    private $name;
+    private ?string $name;
 
     /**
      * @ORM\Column(type="text")
@@ -48,24 +49,24 @@ class Trick
      *      maxMessage = "Le titre ne doit pas dépasser les {{ limit }} caractères"
      * )
      */
-    private $content;
+    private ?string $content;
 
     /**
      * @ORM\Column(type="datetime")
      * @Groups({"loadMore"})
      * @Assert\NotBlank
      */
-    private $createdAt;
+    private \DateTime $createdAt;
 
     /**
      * @ORM\Column(type="datetime", nullable=true)
      */
-    private $updateAt;
+    private \DateTime $updateAt;
 
     /**
      * @ORM\ManyToOne(targetEntity=Category::class, inversedBy="tricks")
      */
-    private $category;
+    private ?Category $category;
 
     /**
      * @ORM\OneToMany(targetEntity=Picture::class, mappedBy="trick", orphanRemoval=true, cascade={"persist", "remove"}, fetch="EAGER")
@@ -230,7 +231,7 @@ class Trick
 
     public function getDefaultPicture(){
         $first =  $this->pictures->first();
-        return $first ? $first->getFilename() : "assets/img/tricks/snowboard0.jpeg";
+        return $first ? $first->getFilename() : "assets/img/tricks/snowboard1.jpeg";
     }
 
     /**

@@ -19,5 +19,6 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /templates/test
+/tests/
 
 
