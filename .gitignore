@@ -7,6 +7,10 @@
 /public/bundles/
 /var/
 /vendor/
+/.idea/
+/public/uploads/img/avatar/
+/public/uploads/img/tricks/
+
 ###< symfony/framework-bundle ###
 
 ###> symfony/phpunit-bridge ###
@@ -15,3 +19,4 @@
 /phpunit.xml
 ###< symfony/phpunit-bridge ###
 /templates/test
+

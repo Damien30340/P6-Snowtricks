@@ -10,7 +10,7 @@ use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 class TrickFixtures extends Fixture implements DependentFixtureInterface
 {
 
-    private static $datas = [
+    public static $datas = [
         ["Le Mute", "Saisie de la carre frontside de la planche entre les deux pieds avec la main avant.", 'category_1'],
         ["Le Indy", "Saisie de la carre frontside de la planche, entre les deux pieds, avec la main arrière.", 'category_1'],
         ["Le Nose Grap", "Saisie de la partie avant de la planche, avec la main avant.", 'category_1'],

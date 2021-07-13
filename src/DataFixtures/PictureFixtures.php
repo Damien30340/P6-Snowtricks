@@ -3,41 +3,65 @@
 namespace App\DataFixtures;
 
 use App\Entity\Picture;
+use App\Service\Uploader;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
+use Symfony\Component\Filesystem\Filesystem;
+use Symfony\Component\HttpFoundation\File\UploadedFile;
 
 class PictureFixtures extends Fixture implements DependentFixtureInterface
 {
+
+    private Uploader $uploader;
+    private Filesystem $filesystem;
+
+    public function __construct(Uploader $uploader, Filesystem $filesystem)
+    {
+        $this->uploader = $uploader;
+        $this->filesystem = $filesystem;
+    }
+
     private static $img = [
-        "/img/tricks/snowboard0.jpeg",
-        "/img/tricks/snowboard1.jpeg",
-        "/img/tricks/snowboard2.jpeg",
-        "/img/tricks/snowboard3.jpeg",
-        "/img/tricks/snowboard4.jpeg",
-        "/img/tricks/snowboard5.jpeg",
-        "/img/tricks/snowboard6.jpeg",
-        "/img/tricks/snowboard7.jpeg",
-        "/img/tricks/snowboard9.jpeg",
-        "/img/tricks/snowboard10.jpeg",
-        "/img/tricks/snowboard11.jpeg",
-        "/img/tricks/snowboard10.jpeg",
-        "/img/tricks/snowboard9.jpeg",
-        "/img/tricks/snowboard8.jpeg",
-        "/img/tricks/snowboard7.jpeg",
-        "/img/tricks/snowboard6.jpeg",
-        "/img/tricks/snowboard5.jpeg",
-        "/img/tricks/snowboard4.jpeg"
+        "/tricks/snowboard1.jpeg",
+        "/tricks/snowboard2.jpeg",
+        "/tricks/snowboard3.jpeg",
+        "/tricks/snowboard5.jpeg",
+        "/tricks/snowboard4.jpeg",
+        "/tricks/snowboard5.jpeg",
+        "/tricks/snowboard6.jpeg",
+        "/tricks/snowboard7.jpeg",
+        "/tricks/snowboard8.jpeg",
+        "/tricks/snowboard9.jpeg",
+        "/tricks/snowboard10.jpeg",
+        "/tricks/snowboard11.jpeg"
     ];
 
     public function load(ObjectManager $manager)
     {
-        foreach (self::$img as $index => $data) {
+        $nbTricks = count(TrickFixtures::$datas);
+
+
+        for ($i = 0; $i < $nbTricks; $i++) {
+            $this->filesystem->copy(__DIR__.self::$img[rand(0, count(self::$img)-1)], __DIR__."/tricks/tmp.jpeg");
+
+
+            $uplodedFile = new UploadedFile(__DIR__."/tricks/tmp.jpeg",
+                uniqid("img_"),
+                null,
+                null,
+                true);
+
+            $fileName = $this->uploader->upload($uplodedFile, Uploader::PICTURE_TRICK_DIR);
+
+
             $picture = (new Picture())
-                ->setFileName($data, Picture::FIXTURES_DIR)
-                ->setTrick($this->getReference('trick_' . $index));
+                ->setFileName($fileName, Picture::UPLOADS_DIR)
+                ->setTrick($this->getReference('trick_' . $i));
             $manager->persist($picture);
         }
+
+
         $manager->flush();
     }
 

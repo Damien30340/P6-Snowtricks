@@ -2,8 +2,22 @@
 
 {% block title %}Trick n°{{ trick.id }}{% endblock %}
 
+{% block javascripts %}
+    <script src="{{ asset('assets/js/modal.js') }}" defer></script>
+{% endblock %}
 {% block body %}
     <section>
+        {% for message in app.flashes('success') %}
+            <div class="container-fluid mt-5">
+                <div class="row justify-content-center text-center">
+                    <div class="col-8">
+                        <div class="alert alert-success mt-5" role="alert">
+                            {{ message }}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
         <div class="container-fluid mt-5">
             <div class="row justify-content-center text-center">
                 {% if trick.pictures is not empty %}
@@ -39,33 +53,64 @@
                         </div>
                     </div>
                 </div>
-                {% for comment in trick.comments %}
+                {% for comment in comments %}
                     <div class="row justify-content-center">
                         <div class="col-md-8">
                             <img class="avatar comment-avatar" src="" alt="">
                             <div class="well">
                                 <div class="media-heading">
-                                    <span class="heading-font"><strong>{{ comment.author.username }}</strong></span>&nbsp; <small
+                                    <span class="heading-font"><b>{{ comment.author.username }}</b></span>&nbsp;
+                                    <small
                                             class="secondary-font">le {{ comment.createdAt|date('d/m/Y à h:m') }}</small>
+                                    {% if is_granted('ROLE_USER') and comment.author.id == app.user.id %}
+                                        <span><button class="btn btn-danger btn-sm" id="button-remove-comment"
+                                                      data-link="/comment/delete/{{ comment.id }}"><i
+                                                        class="bi bi-trash"></i></button></span>
+                                    {% endif %}
                                 </div>
                                 <p>{{ comment.content }}</p>
                             </div>
                         </div>
                     </div>
                 {% endfor %}
+                {% if totalComments > 10 %}
+                <div class="col-md-8">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li class="{{ (page == 1) ? 'page-item disabled' : '' }}">
+                                <a class="page-link" href="{{ (page > 1) ? '?page=' ~ (page-1) : '' }}"
+                                   tabindex="-1"
+                                   aria-disabled="true">Précédent</a>
+                            </li>
+                            {% set pages = (totalComments / limit)|round(0, 'ceil') %}
+                                {% for item in 1..pages %}
+                                    <li class="{{ (page == item) ? 'page-item active' : '' }}" aria-current="page">
+                                        <a class="page-link" href="?page={{ item }}">{{ item }}</a>
+                                    </li>
+                                {% endfor %}
 
-                <!--/.media-->
-                <div class="row justify-content-center">
-                    <div class="col-md-8">
-                        <div class="mt60 mb50 single-section-title">
-                            <h3>Poster un commentaire</h3>
-                        </div>
-                        {{ form_start(commentForm) }}
-                        {{ form_row(commentForm.content, {'attr': {'class': 'form-control col-md-12'}, 'label': 'Contenu'}) }}
-                        <button type="submit" class="btn btn-primary pull-right">Envoyer</button>
-                        {{ form_end(commentForm) }}
-                    </div>
+                            <li class="{{ (page == pages) ? 'page-item disabled' : '' }}">
+                                <a class="page-link" href="{{ (page < pages) ? '?page=' ~ (page+1) : '' }}"
+                                   tabindex="-1"
+                                   aria-disabled="true">Suivant</a>
+                            </li>
+                        </ul>
+                    </nav>
                 </div>
+                {% endif %}
+                {% if is_granted('ROLE_USER') %}
+                    <div class="row justify-content-center">
+                        <div class="col-md-8">
+                            <div class="mt60 mb50 single-section-title">
+                                <h3>Poster un commentaire</h3>
+                            </div>
+                            {{ form_start(commentForm) }}
+                            {{ form_row(commentForm.content, {'attr': {'class': 'form-control col-md-12'}, 'label': 'Contenu'}) }}
+                            <button type="submit" class="btn btn-primary pull-right">Envoyer</button>
+                            {{ form_end(commentForm) }}
+                        </div>
+                    </div>
+                {% endif %}
             </div>
         </div>
     </section>

@@ -12,7 +12,6 @@ class Uploader
 
     const AVATAR_DIR = "/img/avatar/";
     const PICTURE_TRICK_DIR = "/img/tricks/";
-    const PICTURE_DIR_FULL = "D:\Local\Symfony\P6-Snowtricks\public";
 
 
     private SluggerInterface $slugger;
@@ -46,7 +45,7 @@ class Uploader
 
     public function deleteFile(Picture $picture){
         try {
-            unlink(self::PICTURE_DIR_FULL . $picture->getFileName());
+            unlink($this->baseUploadDir . $picture->getFileName());
         } catch (\Exception $e){
             return;
         }

@@ -50,10 +50,10 @@ class TrickRepository extends ServiceEntityRepository
     }
     */
 
-    public function getPaginatedTricks($page, $limit)
+    public function getPaginatedComments($page, $limit)
     {
         $query = $this->createQueryBuilder('t')
-            // ->where('t = 1')
+            ->where('t.comments')
             ->orderBy('t.createdAt')
             ->setFirstResult(($page * $limit) - $limit)
             ->setMaxResults($limit);
@@ -65,7 +65,6 @@ class TrickRepository extends ServiceEntityRepository
     {
         $query = $this->createQueryBuilder('t')
             ->select('COUNT(t)');
-        // ->where('a.active = 1');
 
         return $query->getQuery()->getSingleScalarResult();
     }

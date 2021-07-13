@@ -4,42 +4,45 @@
 {% endblock %}
 
 {% block body %}
-    <div class="container-fluid mt-5">
+    <div class="container my-5">
         <div class="row justify-content-center">
-            <form method="post">
-                {% if error %}
-                    <div class="row justify-content-center">
+            <div class="col-md-4 my-5">
+                <form method="post">
+                    {% if error %}
                         <div class="col-8">
-                            <div class="alert alert-danger">{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+                            <div class="alert alert-danger">
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
                         </div>
-                    </div>
-                {% endif %}
-
-                <div class="col-md-4">
+                    {% endif %}
                     <h1>Connexion</h1>
                     <hr>
                     {% for message in app.flashes('warning') %}
-                        <div class="alert alert-danger" role="alert">
-                            {{ message|raw }}
+                        <div class="col-8">
+                            <div class="alert alert-danger" role="alert">
+                                {{ message|raw }}
+                            </div>
                         </div>
                     {% endfor %}
                     {% for message in app.flashes('notice') %}
-                        <div class="alert alert-warning" role="alert">
-                            {{ message|raw }}
+                        <div class="col-8">
+                            <div class="alert alert-warning" role="alert">
+                                {{ message|raw }}
+                            </div>
                         </div>
                     {% endfor %}
                     {% if app.user %}
-                        <div class="mb-3">
+                        <div class="col-8 my-3">
                             Vous êtes connecté avec
                             {{ app.user.username }},
                             <a href="{{ path('app_logout') }}">Se deconnecter</a>
                         </div>
                         <br>
                     {% endif %}
-                    <label for="inputUsername">Username</label>
+                    <label for="inputUsername">Votre pseudo</label>
                     <input type="text" value="{{ last_username }}" name="username" id="inputUsername"
                            class="form-control" required autofocus>
-                    <label for="inputPassword">Password</label>
+                    <label for="inputPassword">Votre mot de passe</label>
                     <input type="password" name="password" id="inputPassword" class="form-control" required>
 
                     <input
@@ -59,9 +62,10 @@
                     <button class="btn btn-lg btn-primary" type="submit">
                         Se connecter
                     </button>
-            </form>
-            <br>
-            <a href="/forgot-password" class="btn btn-lg btn-primary">Mot de passe oublié ?</a>
+                </form>
+                <br>
+                <a href="/forgot-password" class="btn btn-lg btn-primary">Mot de passe oublié ?</a>
+            </div>
         </div>
     </div>
 {% endblock %}

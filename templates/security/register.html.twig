@@ -5,24 +5,20 @@
 
 {% block body %}
 
-	<div class="container">
-		<div class="row justify-content-center mt-5">
-			<div class="col-md-4 col-md-push-4">
-				<h1>Inscription</h1>
-				<hr>
-				{% for message in app.flashes('notice') %}
-					<div class="alert alert-warning" role="alert">
-						{{ message }}
-					</div>
-				{% endfor %}
-				{{ form_start(form) }}
-				{{ form_row(form.username, {'attr':{'class': 'form-control'}}) }}
-				{{ form_row(form.email, {'attr': {'class': 'form-control'}}) }}
-				{{ form_row(form.password, {'attr': {'class': 'form-control'}}) }}
-				{{ form_row(form.confirmPassword, {'attr': {'class': 'form-control'}}) }}
-				<button type="submit" class="btn btn-primary">S'incrire</button>
-				{{ form_end(form) }}
-			</div>
-		</div>
-	</div>
+    <div class="container my-5">
+        <div class="row justify-content-center my-5">
+            <div class="col-md-4 col-md-push-4">
+                <h1>Inscription</h1>
+                <hr>
+                {% for message in app.flashes('notice') %}
+                    <div class="col-8">
+                        <div class="alert alert-warning" role="alert">
+                            {{ message }}
+                        </div>
+                    </div>
+                {% endfor %}
+                {{ form(form) }}
+            </div>
+        </div>
+    </div>
 {% endblock %}
