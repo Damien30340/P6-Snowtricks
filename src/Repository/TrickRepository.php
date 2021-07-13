@@ -66,7 +66,7 @@ class TrickRepository extends ServiceEntityRepository
         $query = $this->createQueryBuilder('t')
             ->select('COUNT(t)');
 
-        $query->getQuery()->getSingleScalarResult();
+        return $query->getQuery()->getSingleScalarResult();
     }
 
     public function getLoadMoreTrick($page)

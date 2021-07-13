@@ -12,7 +12,7 @@ class CommentFixtures extends Fixture implements DependentFixtureInterface
 
     public function load(ObjectManager $manager)
     {
-       for($i=1; $i <= 11; $i++){
+       for($i=1; $i <= 150; $i++){
 
            $rand1 = random_int(1, 11);
            $rand2 = random_int(1, 14);

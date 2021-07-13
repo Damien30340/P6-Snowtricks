@@ -38,8 +38,7 @@ class TrickController extends AbstractController
                     ->setTrick($trick);
             $em->persist($comment);
             $em->flush();
-
-            return $this->redirectToRoute('app_show_trick', ['id' => $trick->getId()]);
+            return $this->redirectToRoute('app_show_trick', ['id' => $trick->getId(), 'slug' => $trick->getSlug()]);
         }
         $picture = $trick->getDefaultPicture();
 

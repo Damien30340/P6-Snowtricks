@@ -73,29 +73,31 @@
                         </div>
                     </div>
                 {% endfor %}
-                    <div class="col-md-8">
-                        <nav aria-label="...">
-                            <ul class="pagination">
-                                <li class="{{ (page == 1) ? 'page-item disabled' : '' }}">
-                                    <a class="page-link" href="{{ (page > 1) ? '?page=' ~ (page-1) : '' }}"
-                                       tabindex="-1"
-                                       aria-disabled="true">Précédent</a>
-                                </li>
-                                {% set pages = (totalComments / limit)|round(0, 'ceil') %}
+                {% if totalComments > 10 %}
+                <div class="col-md-8">
+                    <nav aria-label="...">
+                        <ul class="pagination">
+                            <li class="{{ (page == 1) ? 'page-item disabled' : '' }}">
+                                <a class="page-link" href="{{ (page > 1) ? '?page=' ~ (page-1) : '' }}"
+                                   tabindex="-1"
+                                   aria-disabled="true">Précédent</a>
+                            </li>
+                            {% set pages = (totalComments / limit)|round(0, 'ceil') %}
                                 {% for item in 1..pages %}
                                     <li class="{{ (page == item) ? 'page-item active' : '' }}" aria-current="page">
                                         <a class="page-link" href="?page={{ item }}">{{ item }}</a>
                                     </li>
                                 {% endfor %}
-                                <li class="{{ (page == pages) ? 'page-item disabled' : '' }}">
-                                    <a class="page-link" href="{{ (page < pages) ? '?page=' ~ (page+1) : '' }}"
-                                       tabindex="-1"
-                                       aria-disabled="true">Suivant</a>
-                                </li>
-                            </ul>
-                        </nav>
-                    </div>
 
+                            <li class="{{ (page == pages) ? 'page-item disabled' : '' }}">
+                                <a class="page-link" href="{{ (page < pages) ? '?page=' ~ (page+1) : '' }}"
+                                   tabindex="-1"
+                                   aria-disabled="true">Suivant</a>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+                {% endif %}
                 {% if is_granted('ROLE_USER') %}
                     <div class="row justify-content-center">
                         <div class="col-md-8">

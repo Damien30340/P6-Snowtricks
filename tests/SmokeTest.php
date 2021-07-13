@@ -33,7 +33,7 @@ class SmokeTest extends WebTestCase
         yield "delete-account" => ['/deleteAccount', Response::HTTP_FOUND]; //
         yield "member_area" => ['/member_area', Response::HTTP_FOUND]; //
         yield "trick-add" => ['/trick/add', Response::HTTP_FOUND];
-        yield "show-trick-with-{id}" => ['/trick/show/1', Response::HTTP_OK];
+        yield "show-trick-with-{id}-{slug}" => ['/trick/show/1/Le-Mute', Response::HTTP_OK];
         yield "trick-edit-with-{id}" => ['/trick/edit/1', Response::HTTP_FOUND];
         yield "-trick-delete-with-{id}" => ['/trick/delete/1', Response::HTTP_FOUND];
     }
