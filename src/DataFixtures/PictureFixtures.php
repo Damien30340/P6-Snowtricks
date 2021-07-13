@@ -46,13 +46,13 @@ class PictureFixtures extends Fixture implements DependentFixtureInterface
             $this->filesystem->copy(__DIR__.self::$img[rand(0, count(self::$img)-1)], __DIR__."/tricks/tmp.jpeg");
 
 
-            $uplodedFile = new UploadedFile(__DIR__."/tricks/tmp.jpeg",
+            $uploadedFile = new UploadedFile(__DIR__."/tricks/tmp.jpeg",
                 uniqid("img_"),
                 null,
                 null,
                 true);
 
-            $fileName = $this->uploader->upload($uplodedFile, Uploader::PICTURE_TRICK_DIR);
+            $fileName = $this->uploader->upload($uploadedFile, Uploader::PICTURE_TRICK_DIR);
 
 
             $picture = (new Picture())

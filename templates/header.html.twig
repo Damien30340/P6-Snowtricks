@@ -30,16 +30,10 @@
                                     class="pe-icon pe-7s-comment"></i> Commentaires <span>{{ trick.comments.count }}</span></span>
                         <span class="meta-item post-date"><i
                                     class="pe-icon pe-7s-clock"></i> Posté le <span>{{ trick.createdAt|date("d/m/Y") }}</span></span>
-                        {% if is_granted('ROLE_USER') %}
+                        {% if is_granted('ROLE_USER') and app.request.get('_route') != 'app_trick_edit' %}
                             <ul style="list-style-type: none;">
                                 <li>
-                                    <button class="btn btn-sm btn-link"
-                                            style="text-decoration: none; color: black;"
-                                            data-link="{{ path('app_trick_edit', {'id': trick.id}) }}"
-                                            id="button-edit-trick">
-                                        <i class="bi bi-pen"></i>
-                                        Modifier
-                                    </button>
+                                    <a href="{{ path('app_trick_edit', {'id': trick.id}) }}" class="btn btn-sm btn-link" style="text-decoration: none; color: black;"><i class="bi bi-pen"></i> Modifier</a>
                                 </li>
                                 <li>
                                     <button class="btn btn-sm btn-danger"

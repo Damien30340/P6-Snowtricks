@@ -22,7 +22,7 @@ class Picture
     /**
      * @ORM\Column(type="string", length=255)
      */
-    private ?string $fileName;
+    private  $fileName;
 
     /**
      * @var File|null
