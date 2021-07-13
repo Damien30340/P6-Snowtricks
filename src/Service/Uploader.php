@@ -13,7 +13,6 @@ class Uploader
     const AVATAR_DIR = "/img/avatar/";
     const PICTURE_TRICK_DIR = "/img/tricks/";
 
-
     private SluggerInterface $slugger;
     private string $baseUploadDir;
 
