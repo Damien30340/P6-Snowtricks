@@ -23,6 +23,7 @@ document.addEventListener("DOMContentLoaded", function (e) {
         const picture = data.pictures
         const category = data.categories
         const comment = data.comments
+
         const totalPages = data.totalPages
         const user = data.connected;
 
@@ -45,7 +46,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
 
                 trickListDefault.appendChild(clone)
             }
+
             if (document.querySelector("#button-remove-trick-js")) {
+                console.log('condition remove trick')
                 let myButtonTrick = document.querySelectorAll("#button-remove-trick-js");
                 let myModalTrick = new bootstrap.Modal(document.getElementById('modal'));
 
@@ -59,7 +62,9 @@ document.addEventListener("DOMContentLoaded", function (e) {
                 }
             }
         }
+   
         if (currentPage < totalPages) {
+
             button.style.display = "initial"
             gif.style.display = "none"
         } else {
