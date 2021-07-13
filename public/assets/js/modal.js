@@ -1,6 +1,5 @@
 // Modal for ACCOUNT Delete
 if (document.querySelector("#button-remove-account")) {
-    console.log('condition remove account')
     let myButtonAccount = document.querySelector("#button-remove-account");
     let myModalAccount = new bootstrap.Modal(document.getElementById('modal'));
 
@@ -16,7 +15,6 @@ if (document.querySelector("#button-remove-account")) {
 
 // Modal for TRICK Delete
 if (document.querySelector("#button-remove-trick")) {
-    console.log('condition remove trick')
     let myButtonTrick = document.querySelectorAll("#button-remove-trick");
     let myModalTrick = new bootstrap.Modal(document.getElementById('modal'));
 
@@ -33,7 +31,6 @@ if (document.querySelector("#button-remove-trick")) {
 
 // Modal for COMMENT Delete
 if (document.querySelector("#button-remove-comment")) {
-    console.log('condition remove comment')
     let myButtonComment = document.querySelectorAll("#button-remove-comment");
     let myModal = new bootstrap.Modal(document.getElementById('modal'));
 
