@@ -2,9 +2,6 @@
 body {
     font-family: "Raleway", "Helvetica Neue", Helvetica, Arial, sans-serif;
 }
-ul{
-    list-style-type: none;
-}
 /********* END BODY *************/
 
 /********* NAV BAR *************/
@@ -109,6 +106,11 @@ header .overlay {
     background-color: transparent;
     opacity: 65%;
     border: none;
+    text-decoration: none;
+    background-color: transparent;
+    opacity: 65%;
+    border: none;
+    border-bottom: 3px solid black;
 }
 
 .btn-danger:hover, .btn-danger:focus {
@@ -215,4 +217,6 @@ footer h6 {
     transform: scale(1.5); /* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */
 }
 
+
+}
 /********* END FOOTER *************/

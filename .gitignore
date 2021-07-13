@@ -20,7 +20,3 @@
 ###< symfony/phpunit-bridge ###
 /templates/test
 
-###> phpunit/phpunit ###
-/phpunit.xml
-.phpunit.result.cache
-###< phpunit/phpunit ###
