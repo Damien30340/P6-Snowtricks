@@ -18,3 +18,6 @@ Develop SnowTricks Community Site (SYMFONY) from A to Z
 * Step 4: Make a `symfony console` or `php bin/console` followed by `doctrine:database:create`
 * Step 5: Make a `symfony console` or `php bin/console` followed by `doctrine:migrations:migrate`
 * Step 6: Make a `symfony console` or `php bin/console` followed by `doctrine:fixtures:load` 
+
+### BugFix
+If you meet error for doctrine:fixtures:load. It's probably that the directory public/uploads/img/avatar and, or public/uploads/img/tricks not exist, please create before new d:f:l
