@@ -8,9 +8,12 @@ use Doctrine\Persistence\ObjectManager;
 
 class CategoryFixtures extends Fixture
 {
+    /**
+     * @throws \Exception
+     */
     public function removeDirectory($directory){
         if(!is_dir($directory)){
-            throw new $this->createNotFoundException($directory.' is not directory '.__LINE__.', file '.__FILE__);
+            throw new \Exception($directory.' is not directory '.__LINE__.', file '.__FILE__);
         }
         $iterator = new \DirectoryIterator($directory);
         foreach ($iterator as $fileinfo) {
