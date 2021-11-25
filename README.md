@@ -1,4 +1,7 @@
 # P6-Snowtricks
+
+[![Codacy Badge](https://app.codacy.com/project/badge/Grade/f8087e58d0a049e39251cfe5517e2546)](https://www.codacy.com/gh/Damien30340/P6-Snowtricks/dashboard?utm_source=github.com&amp;utm_medium=referral&amp;utm_content=Damien30340/P6-Snowtricks&amp;utm_campaign=Badge_Grade)
+
 Develop SnowTricks Community Site (SYMFONY) from A to Z
 
 ## Config
